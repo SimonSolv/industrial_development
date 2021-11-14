@@ -1,7 +1,7 @@
 
 import UIKit
 
-class ProfileTableHeaderView: UITableViewHeaderFooterView {
+public class ProfileTableHeaderView: UITableViewHeaderFooterView {
     let profileHeader: ProfileHeaderView = {
         let view = ProfileHeaderView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -12,7 +12,7 @@ class ProfileTableHeaderView: UITableViewHeaderFooterView {
         setupViews()
     }
     
-    required init?(coder: NSCoder) {
+    required public init?(coder: NSCoder) {
         super.init(coder: coder)
         setupViews()
     }
