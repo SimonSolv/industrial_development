@@ -26,7 +26,7 @@ extension ProfileTableHeaderView {
    
         let constraints = [
             
-            profileHeader.topAnchor.constraint(equalTo: contentView.topAnchor),
+            profileHeader.topAnchor.constraint(equalTo: contentView.topAnchor, constant: -22),
             profileHeader.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
             profileHeader.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             profileHeader.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
