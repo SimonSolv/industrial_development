@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CE20BA1527593DAC0054D4FA /* UserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE20BA1427593DAC0054D4FA /* UserData.swift */; };
 		CE524CFC26FCFC6C009C182B /* PhotosTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE524CFB26FCFC6C009C182B /* PhotosTableViewCell.swift */; };
 		CE524CFF26FE47E3009C182B /* PhotoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE524CFE26FE47E3009C182B /* PhotoCollectionViewCell.swift */; };
 		CE524D652702314B009C182B /* GalleryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE524D642702314B009C182B /* GalleryViewController.swift */; };
@@ -28,6 +29,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		CE20BA1427593DAC0054D4FA /* UserData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserData.swift; sourceTree = "<group>"; };
 		CE524CFB26FCFC6C009C182B /* PhotosTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosTableViewCell.swift; sourceTree = "<group>"; };
 		CE524CFE26FE47E3009C182B /* PhotoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCollectionViewCell.swift; sourceTree = "<group>"; };
 		CE524D642702314B009C182B /* GalleryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryViewController.swift; sourceTree = "<group>"; };
@@ -107,6 +109,7 @@
 				CE524CFE26FE47E3009C182B /* PhotoCollectionViewCell.swift */,
 				CE524D642702314B009C182B /* GalleryViewController.swift */,
 				CE524D67270233AE009C182B /* GalleryCollectionViewCell.swift */,
+				CE20BA1427593DAC0054D4FA /* UserData.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -187,6 +190,7 @@
 				CED2D0C026E5333300ED0387 /* Post.swift in Sources */,
 				CE8D6E1126A3069000A25380 /* ViewController.swift in Sources */,
 				CE8D6E0D26A3069000A25380 /* AppDelegate.swift in Sources */,
+				CE20BA1527593DAC0054D4FA /* UserData.swift in Sources */,
 				CE8D6E3026A464E100A25380 /* InfoViewController.swift in Sources */,
 				CE8D6E2326A309F900A25380 /* FeedViewController.swift in Sources */,
 				CED2D0C426E9212700ED0387 /* ProfileTableHeaderView.swift in Sources */,

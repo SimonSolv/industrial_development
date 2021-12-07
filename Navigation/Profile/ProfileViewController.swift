@@ -1,7 +1,16 @@
 import UIKit
 
-class ProfileViewController: UIViewController {
+class ProfileViewController: UIViewController{
+    var user: User?
     
+    init (user: User?){
+        self.user = user
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     let tableView: UITableView = {
         var table = UITableView()
         table.frame = .zero
@@ -40,6 +49,7 @@ class ProfileViewController: UIViewController {
         
         NSLayoutConstraint.activate(constraints)
     }
+    
     @objc func openGallery() {
         let vc = GalleryViewController()
         navigationController?.pushViewController(vc, animated: true)
@@ -80,4 +90,7 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate{
     func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
         return PostStorage.tableModel[section].footer
     }
+}
+extension ProfileViewController {
+    
 }

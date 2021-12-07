@@ -3,7 +3,9 @@ import UIKit
 
 class LoginViewController: UIViewController {
     let mainView = UIScrollView()
+    public var userName: String? = nil
     let contentView = UIView()
+    var selectedUser: User? = nil
     let logoImageView: UIView = {
         let image: UIImageView = UIImageView()
         image.image = UIImage(named: "VKlogo")
@@ -32,6 +34,7 @@ class LoginViewController: UIViewController {
         textfield.leftViewMode = .always
         textfield.text = "Email or phone"
         textfield.translatesAutoresizingMaskIntoConstraints = false
+        textfield.addTarget(self, action: #selector(loginTextChanged), for: .editingChanged)
         textfield.addTarget(self, action: #selector(passwordFieldTapped), for: .editingDidBegin)
         return textfield
     }()
@@ -59,12 +62,19 @@ class LoginViewController: UIViewController {
         return view
     }()
     
+    @objc func loginTextChanged(_ textField: UITextField){
+        userName = textField.text
+    }
+    
     @objc func secureTypeOn(_ textField: UITextField){
         textField.isSecureTextEntry = true
     }
     
     @objc func buttonPressed() {
-        let vc = ProfileViewController()
+        let instanceUser = CurrentUserService()
+        selectedUser = instanceUser.UserDataCollect(userName: userName)
+        print(selectedUser?.name)
+        let vc = ProfileViewController(user: selectedUser )
         navigationController?.pushViewController(vc, animated: false)
     }
     

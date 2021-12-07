@@ -1,12 +1,15 @@
 import UIKit
+let vc = LoginViewController()
 
 class ProfileHeaderView: UIView {
     var status: String? = "Waiting for something..."
+    
     var isSelected: Bool = false
+  
     var avatarImageView: UIImageView = {
         var image: UIImageView = UIImageView()
         image.translatesAutoresizingMaskIntoConstraints = false
-        image.image = UIImage(named: "ProfilePic")
+        image.image = vc.selectedUser?.avatar
         image.layer.cornerRadius = 50
         image.clipsToBounds = true
         image.layer.borderWidth = 3
@@ -18,7 +21,7 @@ class ProfileHeaderView: UIView {
     var fullNameLabel: UILabel = {
         var name: UILabel = UILabel()
         name.translatesAutoresizingMaskIntoConstraints = false
-        name.text = "Pajama Kid"
+        name.text = vc.selectedUser?.name
         name.font = .boldSystemFont(ofSize: 18)
         return name
     }()
@@ -81,7 +84,7 @@ class ProfileHeaderView: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
+        print (vc.selectedUser?.name)
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tap))
 
         addGestureRecognizer(tapGesture)
