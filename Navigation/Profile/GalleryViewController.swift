@@ -1,5 +1,5 @@
 import UIKit
-
+import StorageService
 class GalleryViewController: UIViewController {
 
     let galleryView: UICollectionView = {
@@ -47,12 +47,12 @@ class GalleryViewController: UIViewController {
 }
 extension GalleryViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return PhotoStorage.photoGrid.count
+        return PhotoStorage().photoGrid.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GalleryCollectionViewCell.identifier, for: indexPath) as! GalleryCollectionViewCell
-        cell.sourse = PhotoStorage.photoGrid[indexPath.row]
+        cell.sourse = PhotoStorage().photoGrid[indexPath.row]
         return cell
     }
     

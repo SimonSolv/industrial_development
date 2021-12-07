@@ -54,19 +54,22 @@ class ProfileViewController: UIViewController {
         guard segue.identifier == "Post" else { return }
         guard segue.destination is PostViewController else { return }
     }
-
 }
 extension ProfileViewController: UITableViewDataSource, UITableViewDelegate{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return PostStorage.tableModel[section].body.count + 1
+        return PostStorage().tableModel[section].body.count + 1
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return PostStorage.tableModel.count
+        return PostStorage().tableModel.count
     }
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        return PostStorage.tableModel[section].sectionHeader
+        let header: ProfileTableHeaderView = {
+        let view = ProfileTableHeaderView()
+        return view
+        }()
+        return header
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -75,13 +78,13 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate{
             return cell
         }
         let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath) as? PostTableViewCell
-        cell?.post = PostStorage.tableModel[indexPath.section].body[indexPath.row - 1]
+        cell?.post = PostStorage().tableModel[indexPath.section].body[indexPath.row - 1]
         return cell!
     }
 
 
  
     func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
-        return PostStorage.tableModel[section].footer
+        return PostStorage().tableModel[section].footer
     }
 }

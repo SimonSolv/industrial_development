@@ -6,7 +6,7 @@
 //
 
 import UIKit
-
+import StorageService
 class PhotosTableViewCell: UITableViewCell {
     static let  identifier = "photos"
     
@@ -101,7 +101,7 @@ extension PhotosTableViewCell: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PhotoCollectionViewCell.identifier, for: indexPath) as! PhotoCollectionViewCell
-        cell.source = PhotoStorage.photoGrid[indexPath.row]
+        cell.source = PhotoStorage().photoGrid[indexPath.row]
         return cell
     }
     

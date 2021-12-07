@@ -191,7 +191,6 @@
 				CE8D6E6226A9B1AE00A25380 /* ProfileViewController.swift */,
 				CEC51D5026C2F9BA0093913C /* LoginViewController.swift */,
 				CED2D0BC26E532F600ED0387 /* PostTableViewCell.swift */,
-				CED2D0BF26E5333300ED0387 /* Post.swift */,
 				CED2D0C326E9212700ED0387 /* ProfileTableHeaderView.swift */,
 				CE524CFB26FCFC6C009C182B /* PhotosTableViewCell.swift */,
 				CE524CFE26FE47E3009C182B /* PhotoCollectionViewCell.swift */,
@@ -204,6 +203,7 @@
 		CEBE0119274194A6009CFB06 /* StorageService */ = {
 			isa = PBXGroup;
 			children = (
+				CED2D0BF26E5333300ED0387 /* Post.swift */,
 				CEBE011A274194A6009CFB06 /* StorageService.h */,
 				CEBE011B274194A6009CFB06 /* StorageService.docc */,
 			);

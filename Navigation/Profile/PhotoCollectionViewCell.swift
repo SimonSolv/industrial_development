@@ -1,5 +1,5 @@
 import UIKit
-
+import StorageService
 class PhotoCollectionViewCell: UICollectionViewCell {
     static let  identifier = "lib"
     
