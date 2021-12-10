@@ -2,7 +2,7 @@ import UIKit
 import iOSIntPackage
 
 class PostTableViewCell: UITableViewCell {
-    
+     let imageFilter = ImageProcessor()
     var post: PostBody? {
         didSet {
             postImageView.image = post?.image
@@ -19,9 +19,10 @@ class PostTableViewCell: UITableViewCell {
         imageView.backgroundColor = .black
         imageView.contentMode = .scaleAspectFit
         imageView.sizeToFit()
+ //       imageFilter.processImage(sourceImage: imageView.image, filter: .fade, completion: nil)
         return imageView
     }()
-   // processImage(sourceImage: postImageView.image, filter: .fade, completion: nil)
+ //   ImageProcessor().processImage(sourceImage: postImageView.image, filter: .fade, completion: nil)
     
     var postTitle: UILabel = {
         let label = UILabel()
@@ -61,6 +62,8 @@ class PostTableViewCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+
+        ImageProcessor().processImage(sourceImage: postImageView.image!, filter: .fade, completion: (UIImage?) -> Void)
         setupViews()
 
     }
