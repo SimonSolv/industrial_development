@@ -1,7 +1,11 @@
 import UIKit
-let vc = LoginViewController()
+//let vc = LoginViewController()
 
 class ProfileHeaderView: UIView {
+    static let identifier = "ProfileHeaderView"
+    
+    var selectedUser: User?
+    
     var status: String? = "Waiting for something..."
     
     var isSelected: Bool = false
@@ -9,7 +13,7 @@ class ProfileHeaderView: UIView {
     var avatarImageView: UIImageView = {
         var image: UIImageView = UIImageView()
         image.translatesAutoresizingMaskIntoConstraints = false
-        image.image = vc.selectedUser?.avatar
+        image.image = ProfileViewController.user?.avatar
         image.layer.cornerRadius = 50
         image.clipsToBounds = true
         image.layer.borderWidth = 3
@@ -21,13 +25,14 @@ class ProfileHeaderView: UIView {
     var fullNameLabel: UILabel = {
         var name: UILabel = UILabel()
         name.translatesAutoresizingMaskIntoConstraints = false
-        name.text = vc.selectedUser?.name
+        name.text = ProfileViewController.user?.name
         name.font = .boldSystemFont(ofSize: 18)
         return name
     }()
     
     var statusLabel: UILabel = {
         var status: UILabel = UILabel()
+        status.text = ProfileViewController.user?.status
         status.translatesAutoresizingMaskIntoConstraints = false
         status.font = .systemFont(ofSize: 14)
         status.font = .boldSystemFont(ofSize: 18)
@@ -84,7 +89,7 @@ class ProfileHeaderView: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        print (vc.selectedUser?.name)
+       // print (vc.selectedUser?.name)
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tap))
 
         addGestureRecognizer(tapGesture)

@@ -1,7 +1,8 @@
 import UIKit
 
 class ProfileViewController: UIViewController{
-    var user: User?
+    static let identifier = "ProfileViewController"
+    public var user: User?
     
     init (user: User?){
         self.user = user
@@ -26,6 +27,7 @@ class ProfileViewController: UIViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .lightGray
+        print (user?.name)
         setupTableView()
         setupConstraints()
     }
@@ -58,7 +60,9 @@ class ProfileViewController: UIViewController{
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard segue.identifier == "Post" else { return }
-        guard segue.destination is PostViewController else { return }
+        guard let destination = segue.destination as?  PostViewController else { return }
+        destination.title = "Post222"
+
     }
 
 }

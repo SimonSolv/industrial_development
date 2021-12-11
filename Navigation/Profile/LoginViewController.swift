@@ -73,7 +73,7 @@ class LoginViewController: UIViewController {
     @objc func buttonPressed() {
         let instanceUser = CurrentUserService()
         selectedUser = instanceUser.UserDataCollect(userName: userName)
-        print(selectedUser?.name)
+        print(selectedUser?.name as Any)
         let vc = ProfileViewController(user: selectedUser )
         navigationController?.pushViewController(vc, animated: false)
     }
@@ -88,7 +88,11 @@ class LoginViewController: UIViewController {
         setupViews()
         setupConstraits()
     }
-    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard segue.identifier == "ProfileViewController" else { return }
+        guard let destination = segue.destination as? ProfileViewController else { return }
+        destination.user = selectedUser
+    }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         NotificationCenter.default.addObserver(self,
