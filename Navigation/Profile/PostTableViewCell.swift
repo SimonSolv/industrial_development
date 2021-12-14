@@ -6,6 +6,7 @@ class PostTableViewCell: UITableViewCell {
     var post: PostBody? {
         didSet {
             postImageView.image = post?.image
+            ImageProcessor().processImage(sourceImage: postImageView.image!, filter: .fade, completion: postImageView.image as UIImage?)
             postTitle.text = post?.title
             postDescription.text = post?.description
             postViews.text = "Views: \(post?.views ?? 0)"
@@ -62,8 +63,9 @@ class PostTableViewCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        let processedImage: UIImage? = nil
 
-        ImageProcessor().processImage(sourceImage: postImageView.image!, filter: .fade, completion: (UIImage?) -> Void)
+        ImageProcessor().processImage(sourceImage: postImageView.image!, filter: .fade, completion: processedImage)
         setupViews()
 
     }
