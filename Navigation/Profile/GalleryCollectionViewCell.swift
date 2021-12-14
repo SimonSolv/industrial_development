@@ -6,7 +6,7 @@
 //
 
 import UIKit
-
+import StorageService
 class GalleryCollectionViewCell: UICollectionViewCell {
     static let identifier = "GalleryCollectionViewCell"
     var sourse: ImageSet? {
