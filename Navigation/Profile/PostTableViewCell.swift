@@ -3,10 +3,14 @@ import iOSIntPackage
 
 class PostTableViewCell: UITableViewCell {
      let imageFilter = ImageProcessor()
+    var processedImage: UIImage? = nil
     var post: PostBody? {
         didSet {
-            postImageView.image = post?.image
-            ImageProcessor().processImage(sourceImage: postImageView.image!, filter: .fade, completion: postImageView.image as UIImage?)
+            let img = post?.image
+          //  postImageView.image = post?.image
+            ImageProcessor().processImage(sourceImage: img!, filter: .colorInvert, completion: { [weak self] image in
+                postImageView.image = image
+            })
             postTitle.text = post?.title
             postDescription.text = post?.description
             postViews.text = "Views: \(post?.views ?? 0)"
@@ -20,7 +24,6 @@ class PostTableViewCell: UITableViewCell {
         imageView.backgroundColor = .black
         imageView.contentMode = .scaleAspectFit
         imageView.sizeToFit()
- //       imageFilter.processImage(sourceImage: imageView.image, filter: .fade, completion: nil)
         return imageView
     }()
  //   ImageProcessor().processImage(sourceImage: postImageView.image, filter: .fade, completion: nil)
@@ -63,9 +66,6 @@ class PostTableViewCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        let processedImage: UIImage? = nil
-
-        ImageProcessor().processImage(sourceImage: postImageView.image!, filter: .fade, completion: processedImage)
         setupViews()
 
     }
