@@ -2,15 +2,11 @@ import UIKit
 import iOSIntPackage
 
 class PostTableViewCell: UITableViewCell {
-     let imageFilter = ImageProcessor()
-    var processedImage: UIImage? = nil
+    let imageFilter = ImageProcessor()
+    lazy var sourceImage: UIImage? = nil
     var post: PostBody? {
         didSet {
-            let img = post?.image
-          //  postImageView.image = post?.image
-            ImageProcessor().processImage(sourceImage: img!, filter: .colorInvert, completion: { [weak self] image in
-                postImageView.image = image
-            })
+            sourceImage = post?.image
             postTitle.text = post?.title
             postDescription.text = post?.description
             postViews.text = "Views: \(post?.views ?? 0)"
@@ -26,7 +22,6 @@ class PostTableViewCell: UITableViewCell {
         imageView.sizeToFit()
         return imageView
     }()
- //   ImageProcessor().processImage(sourceImage: postImageView.image, filter: .fade, completion: nil)
     
     var postTitle: UILabel = {
         let label = UILabel()
@@ -66,8 +61,8 @@ class PostTableViewCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        imageColoring()
         setupViews()
-
     }
     
     required init?(coder: NSCoder) {
@@ -78,6 +73,12 @@ class PostTableViewCell: UITableViewCell {
 }
 
 extension PostTableViewCell {
+    
+    private func imageColoring() {
+        ImageProcessor().processImage(sourceImage: sourceImage ?? UIImage(imageLiteralResourceName: "NoImage"), filter: .colorInvert, completion: { [weak self] image in
+            postImageView.image = image
+        })
+    }
     
     private func setupViews() {
         translatesAutoresizingMaskIntoConstraints = false
