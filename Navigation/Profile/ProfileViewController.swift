@@ -31,19 +31,18 @@ class ProfileViewController: UIViewController {
     }
     
     func setupConstraints() {
-        let constraints = [
-            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
-        ]
-        
-        NSLayoutConstraint.activate(constraints)
+        tableView.snp.makeConstraints { (make) in
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
+            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
+            make.leading.equalTo(view.snp.leading)
+            make.trailing.equalTo(view.snp.trailing)
+        }
+
     }
     @objc func openGallery() {
         let vc = GalleryViewController()
         navigationController?.pushViewController(vc, animated: true)
-        //navigationController?.navigationBar.isHidden = false
+
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
