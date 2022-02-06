@@ -55,6 +55,7 @@ class PhotosTableViewCell: UITableViewCell {
     
     private func setupConstraints() {
         let constraints = [
+            
             photosLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 12),
             photosLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 12),
             

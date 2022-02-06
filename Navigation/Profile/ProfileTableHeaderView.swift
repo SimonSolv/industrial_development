@@ -4,6 +4,8 @@ import UIKit
 class ProfileTableHeaderView: UITableViewHeaderFooterView {
     let profileHeader: ProfileHeaderView = {
         let view = ProfileHeaderView()
+   //     view.selectedUser = UserStorage().userCurrent
+   //     print (view.selectedUser?.name ?? "Code1")
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()

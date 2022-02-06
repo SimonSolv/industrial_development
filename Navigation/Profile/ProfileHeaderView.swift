@@ -1,22 +1,19 @@
 import UIKit
-//let vc = LoginViewController()
+import SnapKit
 
 class ProfileHeaderView: UIView {
     static let identifier = "ProfileHeaderView"
-    
     var selectedUser: User?
-    
-    var status: String? = "Waiting for something..."
-    
+    var status: String = ""
     var isSelected: Bool = false
   
     var avatarImageView: UIImageView = {
         var image: UIImageView = UIImageView()
         image.translatesAutoresizingMaskIntoConstraints = false
-        image.image = ProfileViewController.user?.avatar
         image.layer.cornerRadius = 50
         image.clipsToBounds = true
         image.layer.borderWidth = 3
+        image.contentMode = .scaleAspectFill
         image.layer.borderColor = CGColor(srgbRed: 100, green: 100, blue: 100, alpha: 100)
         image.isUserInteractionEnabled = true
         return image
@@ -25,14 +22,12 @@ class ProfileHeaderView: UIView {
     var fullNameLabel: UILabel = {
         var name: UILabel = UILabel()
         name.translatesAutoresizingMaskIntoConstraints = false
-        name.text = ProfileViewController.user?.name
         name.font = .boldSystemFont(ofSize: 18)
         return name
     }()
     
     var statusLabel: UILabel = {
         var status: UILabel = UILabel()
-        status.text = ProfileViewController.user?.status
         status.translatesAutoresizingMaskIntoConstraints = false
         status.font = .systemFont(ofSize: 14)
         status.font = .boldSystemFont(ofSize: 18)
@@ -87,14 +82,13 @@ class ProfileHeaderView: UIView {
         return btn
     }()
 
+ 
     override init(frame: CGRect) {
         super.init(frame: frame)
-       // print (vc.selectedUser?.name)
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tap))
 
         addGestureRecognizer(tapGesture)
         translatesAutoresizingMaskIntoConstraints = false
-        statusLabel.text = status
         backgroundColor = .lightGray
         avatarImageView.addGestureRecognizer(tapGesture)
         addSubview(setStatusButton)
@@ -117,46 +111,58 @@ class ProfileHeaderView: UIView {
     }
     
     func setupConstraints() {
-    let constraints =
-        [
-            avatarImageView.leadingAnchor.constraint(equalTo: leadingAnchor ,constant: 16),
-            avatarImageView.trailingAnchor.constraint(equalTo: leadingAnchor,constant: 16+100),
-            avatarImageView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor ,constant: 16),
-            avatarImageView.heightAnchor.constraint(equalToConstant: 100),
+        avatarImageView.snp.makeConstraints { (make) in
+                    make.top.equalTo(self.safeAreaLayoutGuide.snp.top).offset(36)
+                    make.leading.equalTo(self.safeAreaLayoutGuide.snp.leading).offset(16)
+                    make.size.equalTo(CGSize(width: 103, height: 103))
+                }
+
+            fullNameLabel.snp.makeConstraints { (make) in
+                make.leading.equalTo(avatarImageView.snp.trailing).offset(16)
+                make.trailing.equalTo(self.snp.trailing).offset(-16)
+                make.top.equalTo(self.safeAreaLayoutGuide.snp.top).offset(36)
+                make.height.equalTo(23)
+            }
+            statusLabel.snp.makeConstraints { (make) in
+                make.leading.equalTo(fullNameLabel)
+                make.trailing.equalTo(self.snp.trailing).offset(-16)
+                make.top.equalTo(avatarImageView.snp.bottom).offset(-35)
+                make.bottom.equalTo(avatarImageView).offset(-10)
+            }
             
-            fullNameLabel.leadingAnchor.constraint(equalTo: avatarImageView.trailingAnchor ,constant: 16),
-            fullNameLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
-            fullNameLabel.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 27),
-            fullNameLabel.heightAnchor.constraint(equalToConstant: 23),
+            statusTextField.snp.makeConstraints { (make) in
+                make.leading.equalTo(fullNameLabel)
+                make.trailing.equalTo(self.snp.trailing).offset(-16)
+                make.top.equalTo(statusLabel.snp.bottom).offset(10)
+                make.height.equalTo(30)
+            }
             
-            statusLabel.leadingAnchor.constraint(equalTo: fullNameLabel.leadingAnchor),
-            statusLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
-            statusLabel.topAnchor.constraint(equalTo: avatarImageView.bottomAnchor, constant: -35),
-            statusLabel.bottomAnchor.constraint(equalTo: avatarImageView.bottomAnchor, constant: -10),
+            setStatusButton.snp.makeConstraints { (make) in
+                make.leading.equalTo(self.snp.leading).offset(16)
+                make.trailing.equalTo(self.snp.trailing).offset(-16)
+                make.top.equalTo(statusTextField.snp.bottom).offset(10)
+                make.height.equalTo(50)
+            }
             
-            statusTextField.leadingAnchor.constraint(equalTo: fullNameLabel.leadingAnchor),
-            statusTextField.trailingAnchor.constraint(equalTo: trailingAnchor ,constant: -16),
-            statusTextField.topAnchor.constraint(equalTo: statusLabel.bottomAnchor,constant: 10),
-            statusTextField.heightAnchor.constraint(equalToConstant: 50),
+            closeButton.snp.makeConstraints { (make) in
+                make.trailing.equalTo(self.snp.trailing).offset(-20)
+                make.top.equalTo(self.snp.top).offset(10)
+                make.size.equalTo(CGSize(width: 20, height: 20))
+            }
             
-            setStatusButton.leadingAnchor.constraint(equalTo: leadingAnchor,constant: 16),
-            setStatusButton.trailingAnchor.constraint(equalTo: trailingAnchor ,constant: -16),
-            setStatusButton.topAnchor.constraint(equalTo: statusTextField.bottomAnchor,constant: 10),
-            setStatusButton.heightAnchor.constraint(equalToConstant: 50),
-            bottomAnchor.constraint(equalTo: setStatusButton.bottomAnchor, constant: 15),
-            
-            closeButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
-            closeButton.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 10),
-            closeButton.heightAnchor.constraint(equalToConstant: 20),
-            closeButton.widthAnchor.constraint(equalToConstant: 20),
-            
-            dimView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
-            dimView.heightAnchor.constraint(equalToConstant: 2000),
-            dimView.trailingAnchor.constraint(equalTo: super.trailingAnchor),
-            dimView.leadingAnchor.constraint(equalTo: super.leadingAnchor),
-        ]
-    NSLayoutConstraint.activate(constraints)
-    }
+            dimView.snp.makeConstraints { (make) in
+                make.top.equalTo(self.safeAreaLayoutGuide.snp.top)
+                make.trailing.equalTo(self.snp.trailing)
+                make.leading.equalTo(self.snp.leading)
+                make.height.equalTo(2000)
+
+            }
+            self.snp.makeConstraints { (make) in
+                make.top.equalTo(safeAreaLayoutGuide.snp.top).offset(-30)
+                make.bottom.equalTo(setStatusButton).offset(15)
+            }
+
+        }
     
     @objc func backwardsAnimation() {
         animate2()
@@ -167,7 +173,7 @@ class ProfileHeaderView: UIView {
     }
     
     @objc func statusTextChanged(_ textField: UITextField){
-        status = textField.text
+        status = textField.text ?? "No updates"
     }
     
     @objc func buttonPressed(){

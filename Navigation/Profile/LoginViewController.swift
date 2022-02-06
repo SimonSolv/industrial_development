@@ -5,7 +5,7 @@ class LoginViewController: UIViewController {
     let mainView = UIScrollView()
     public var userName: String? = nil
     let contentView = UIView()
-    var selectedUser: User? = nil
+    public var selectedUser: User? = nil
     let logoImageView: UIView = {
         let image: UIImageView = UIImageView()
         image.image = UIImage(named: "VKlogo")
@@ -61,7 +61,7 @@ class LoginViewController: UIViewController {
         view.axis = .vertical
         return view
     }()
-    
+
     @objc func loginTextChanged(_ textField: UITextField){
         userName = textField.text
     }
@@ -69,13 +69,13 @@ class LoginViewController: UIViewController {
     @objc func secureTypeOn(_ textField: UITextField){
         textField.isSecureTextEntry = true
     }
-    
+    var vc: ProfileViewController? = nil
     @objc func buttonPressed() {
         let instanceUser = CurrentUserService()
         selectedUser = instanceUser.UserDataCollect(userName: userName)
-        print(selectedUser?.name as Any)
-        let vc = ProfileViewController(user: selectedUser )
-        navigationController?.pushViewController(vc, animated: false)
+    //    ProfileTableHeaderView().profileHeader.selectedUser = selectedUser
+        vc = ProfileViewController(user: selectedUser)
+        navigationController?.pushViewController(vc ?? ProfileViewController(user: UserStorage().userTester), animated: false)
     }
     
     @objc func passwordFieldTapped(_ textField: UITextField){
@@ -88,11 +88,12 @@ class LoginViewController: UIViewController {
         setupViews()
         setupConstraits()
     }
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        guard segue.identifier == "ProfileViewController" else { return }
-        guard let destination = segue.destination as? ProfileViewController else { return }
-        destination.user = selectedUser
-    }
+//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//        guard segue.identifier == "ProfileViewController" else { return }
+//        guard let destination = segue.destination as? ProfileViewController else { return }
+//        destination.user = selectedUser
+//         print (selectedUser?.name as Any)
+//    }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         NotificationCenter.default.addObserver(self,

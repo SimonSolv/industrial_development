@@ -3,9 +3,14 @@ import UIKit
 class ProfileViewController: UIViewController{
     static let identifier = "ProfileViewController"
     public var user: User?
-    
+    public var streamData: User? = nil
     init (user: User?){
         self.user = user
+        streamData = self.user
+        ProfileHeaderView().selectedUser = streamData
+        print (ProfileHeaderView().selectedUser?.name ?? "Code7")
+        print (streamData?.name ?? "Code01")
+        print (self.user?.name ?? "Code00")
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -22,16 +27,22 @@ class ProfileViewController: UIViewController{
     let cellID = "CellID"
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+
         navigationController?.navigationBar.isHidden = true
     }
     override func viewDidLoad() {
         super.viewDidLoad()
+   //     print (user?.name ?? "NoNameProfileVC")
         view.backgroundColor = .lightGray
-        print (user?.name)
         setupTableView()
         setupConstraints()
     }
-
+    func setUser(user: User, view: ProfileHeaderView) {
+        view.avatarImageView.image = user.avatar
+        view.fullNameLabel.text = user.name
+        view.statusLabel.text = user.status
+    }
+    
     func setupTableView() {
         view.addSubview(tableView)
         tableView.register(PostTableViewCell.self, forCellReuseIdentifier: cellID)
@@ -57,7 +68,7 @@ class ProfileViewController: UIViewController{
         navigationController?.pushViewController(vc, animated: true)
         //navigationController?.navigationBar.isHidden = false
     }
-    
+
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard segue.identifier == "Post" else { return }
         guard let destination = segue.destination as?  PostViewController else { return }
@@ -76,7 +87,9 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate{
     }
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        return PostStorage.tableModel[section].sectionHeader
+        let view = ProfileHeaderView()
+        setUser(user: user!, view: view)
+        return view
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -89,12 +102,8 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate{
         return cell!
     }
 
-
- 
     func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
         return PostStorage.tableModel[section].footer
     }
 }
-extension ProfileViewController {
-    
-}
+

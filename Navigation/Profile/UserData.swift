@@ -16,22 +16,28 @@ protocol UserServiceProtocol {
     func UserDataCollect(userName: String?)-> User
        
 }
+public class UserStorage {
+    public var userPajama = User(name: "Pajama Kid", avatar: UIImage(named: "ProfilePic"), status: "Waiting for something")
+    public var userUnknown  = User(name: "Unknown User", avatar: UIImage(named: "Unknown_user"), status: "set status below")
+    public var userTester = User(name: "Test User", avatar: UIImage(named: "TestAvatar"), status: "testing system")
+    public var userCurrent: User? = nil
+}
 
 public class CurrentUserService: UserServiceProtocol {
-    public var user1 = User(name: "Pajama Kid", avatar: UIImage(named: "ProfilePic"), status: "Waiting for something")
-}
-extension CurrentUserService {
     public func UserDataCollect(userName: String?)-> User {
-        if userName == user1.name {
-            return user1
+        switch userName {
+        case UserStorage().userPajama.name:
+            return UserStorage().userPajama
+        case UserStorage().userTester.name:
+            return UserStorage().userTester
+        default:
+            return UserStorage().userUnknown
         }
-        else {
-            let user2 = User(name: "Incorrect Username", avatar: nil, status: nil)
-            return user2
-        }
+
     }
 }
 public let defaultUser: CurrentUserService = CurrentUserService()
+
 final class TestUserService: UserServiceProtocol {
     let user1 = User(name: "Test User", avatar: UIImage(named: "TestAvatar"), status: "Test status")
     func UserDataCollect(userName: String?)-> User {
