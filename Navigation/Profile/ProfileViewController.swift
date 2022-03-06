@@ -1,16 +1,20 @@
 import UIKit
+import SnapKit
 
 class ProfileViewController: UIViewController{
     static let identifier = "ProfileViewController"
     public var user: User?
     public var streamData: User? = nil
     init (user: User?){
+        #if DEBUG
+        self.user = user
+        let userT = TestUserService().UserDataCollect(userName: "test")
+        ProfileHeaderView().selectedUser = userT
+        #else
         self.user = user
         streamData = self.user
         ProfileHeaderView().selectedUser = streamData
-        print (ProfileHeaderView().selectedUser?.name ?? "Code7")
-        print (streamData?.name ?? "Code01")
-        print (self.user?.name ?? "Code00")
+        #endif
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -32,7 +36,6 @@ class ProfileViewController: UIViewController{
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-   //     print (user?.name ?? "NoNameProfileVC")
         view.backgroundColor = .lightGray
         setupTableView()
         setupConstraints()
@@ -53,30 +56,34 @@ class ProfileViewController: UIViewController{
     }
     
     func setupConstraints() {
+//        tableView.snp.makeConstraints { make in
+//            make.leading.equalTo(view.snp.leading)
+//            make.trailing.equalTo(view.snp.trailing)
+//            make.top.equalTo(view.snp.top)
+//            make.bottom.equalTo(view.snp.bottom)
+//        }
         let constraints = [
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ]
-        
+
         NSLayoutConstraint.activate(constraints)
     }
     
     @objc func openGallery() {
         let vc = GalleryViewController()
         navigationController?.pushViewController(vc, animated: true)
-        //navigationController?.navigationBar.isHidden = false
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard segue.identifier == "Post" else { return }
         guard let destination = segue.destination as?  PostViewController else { return }
         destination.title = "Post222"
-
     }
-
 }
+
 extension ProfileViewController: UITableViewDataSource, UITableViewDelegate{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return PostStorage.tableModel[section].body.count + 1

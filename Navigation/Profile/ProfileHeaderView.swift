@@ -2,14 +2,17 @@ import UIKit
 import SnapKit
 
 class ProfileHeaderView: UIView {
+    
     static let identifier = "ProfileHeaderView"
+    
     var selectedUser: User?
+    
     var status: String = ""
+    
     var isSelected: Bool = false
-  
+    
     var avatarImageView: UIImageView = {
         var image: UIImageView = UIImageView()
-        image.translatesAutoresizingMaskIntoConstraints = false
         image.layer.cornerRadius = 50
         image.clipsToBounds = true
         image.layer.borderWidth = 3
@@ -21,20 +24,18 @@ class ProfileHeaderView: UIView {
     
     var fullNameLabel: UILabel = {
         var name: UILabel = UILabel()
-        name.translatesAutoresizingMaskIntoConstraints = false
         name.font = .boldSystemFont(ofSize: 18)
         return name
     }()
     
     var statusLabel: UILabel = {
         var status: UILabel = UILabel()
-        status.translatesAutoresizingMaskIntoConstraints = false
         status.font = .systemFont(ofSize: 14)
         status.font = .boldSystemFont(ofSize: 18)
         status.textColor = .gray
         return status
     }()
-
+    
     let closeButton: UIButton = {
         var btn = UIButton()
         btn.translatesAutoresizingMaskIntoConstraints = false
@@ -55,7 +56,6 @@ class ProfileHeaderView: UIView {
     
     var statusTextField: UITextField = {
         var textfield: UITextField = UITextField()
-        textfield.translatesAutoresizingMaskIntoConstraints = false
         textfield.backgroundColor = .white
         textfield.layer.cornerRadius = 12
         textfield.layer.borderWidth = 1
@@ -70,7 +70,6 @@ class ProfileHeaderView: UIView {
     
     var setStatusButton: UIButton = {
         var btn = UIButton()
-        btn.translatesAutoresizingMaskIntoConstraints = false
         btn.backgroundColor = .blue
         btn.layer.cornerRadius = 12
         btn.addTarget(self , action: #selector(buttonPressed), for: .touchUpInside)
@@ -81,92 +80,96 @@ class ProfileHeaderView: UIView {
         btn.layer.shadowOpacity = 1.0
         return btn
     }()
-
- 
+    
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
+        
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tap))
-
         addGestureRecognizer(tapGesture)
         translatesAutoresizingMaskIntoConstraints = false
         backgroundColor = .lightGray
-        avatarImageView.addGestureRecognizer(tapGesture)
-        addSubview(setStatusButton)
+
         addSubview(avatarImageView)
         addSubview(fullNameLabel)
         addSubview(statusLabel)
         addSubview(statusTextField)
-        addSubview(dimView)
         addSubview(closeButton)
+        addSubview(dimView)
+        addSubview(setStatusButton)
         
+        avatarImageView.addGestureRecognizer(tapGesture)
         closeButton.isHidden = true
         dimView.isHidden = true
         bringSubviewToFront(avatarImageView)
         setupConstraints()
-
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+   
     func setupConstraints() {
+        
         avatarImageView.snp.makeConstraints { (make) in
-                    make.top.equalTo(self.safeAreaLayoutGuide.snp.top).offset(36)
-                    make.leading.equalTo(self.safeAreaLayoutGuide.snp.leading).offset(16)
-                    make.size.equalTo(CGSize(width: 103, height: 103))
-                }
-
-            fullNameLabel.snp.makeConstraints { (make) in
-                make.leading.equalTo(avatarImageView.snp.trailing).offset(16)
-                make.trailing.equalTo(self.snp.trailing).offset(-16)
-                make.top.equalTo(self.safeAreaLayoutGuide.snp.top).offset(36)
-                make.height.equalTo(23)
-            }
-            statusLabel.snp.makeConstraints { (make) in
-                make.leading.equalTo(fullNameLabel)
-                make.trailing.equalTo(self.snp.trailing).offset(-16)
-                make.top.equalTo(avatarImageView.snp.bottom).offset(-35)
-                make.bottom.equalTo(avatarImageView).offset(-10)
-            }
-            
-            statusTextField.snp.makeConstraints { (make) in
-                make.leading.equalTo(fullNameLabel)
-                make.trailing.equalTo(self.snp.trailing).offset(-16)
-                make.top.equalTo(statusLabel.snp.bottom).offset(10)
-                make.height.equalTo(30)
-            }
-            
-            setStatusButton.snp.makeConstraints { (make) in
-                make.leading.equalTo(self.snp.leading).offset(16)
-                make.trailing.equalTo(self.snp.trailing).offset(-16)
-                make.top.equalTo(statusTextField.snp.bottom).offset(10)
-                make.height.equalTo(50)
-            }
-            
-            closeButton.snp.makeConstraints { (make) in
-                make.trailing.equalTo(self.snp.trailing).offset(-20)
-                make.top.equalTo(self.snp.top).offset(10)
-                make.size.equalTo(CGSize(width: 20, height: 20))
-            }
-            
-            dimView.snp.makeConstraints { (make) in
-                make.top.equalTo(self.safeAreaLayoutGuide.snp.top)
-                make.trailing.equalTo(self.snp.trailing)
-                make.leading.equalTo(self.snp.leading)
-                make.height.equalTo(2000)
-
-            }
-            self.snp.makeConstraints { (make) in
-                make.top.equalTo(safeAreaLayoutGuide.snp.top).offset(-30)
-                make.bottom.equalTo(setStatusButton).offset(15)
-            }
-
+            make.top.equalTo(self.safeAreaLayoutGuide.snp.top).offset(36)
+            make.leading.equalTo(self.safeAreaLayoutGuide.snp.leading).offset(16)
+            make.size.equalTo(CGSize(width: 103, height: 103))
         }
+        
+        fullNameLabel.snp.makeConstraints { (make) in
+            make.leading.equalTo(avatarImageView.snp.trailing).offset(16)
+            make.trailing.equalTo(self.snp.trailing).offset(-16)
+            make.top.equalTo(safeAreaLayoutGuide.snp.top).offset(36)
+            make.height.equalTo(23)
+        }
+        
+        statusLabel.snp.makeConstraints { (make) in
+            make.leading.equalTo(fullNameLabel.snp.leading)
+            make.trailing.equalTo(self.snp.trailing).offset(-16)
+            make.top.equalTo(avatarImageView.snp.bottom).offset(-35)
+            make.height.equalTo(25)
+        }
+        
+        statusTextField.snp.makeConstraints { (make) in
+            make.leading.equalTo(fullNameLabel.snp.leading)
+            make.trailing.equalTo(self.snp.trailing).offset(-16)
+            make.top.equalTo(statusLabel.snp.bottom).offset(10)
+            make.height.equalTo(30)
+        }
+        
+        setStatusButton.snp.makeConstraints { (make) in
+            make.leading.equalTo(self.safeAreaLayoutGuide.snp.leading).offset(16)
+            make.trailing.equalTo(self.safeAreaLayoutGuide.snp.trailing).offset(-16)
+            make.top.equalTo(statusTextField.snp.bottom).offset(10)
+            make.height.equalTo(50)
+        }
+        
+        self.snp.makeConstraints { (make) in
+            make.bottom.equalTo(setStatusButton.snp.bottom).offset(15)
+        }
+        
+        closeButton.snp.makeConstraints { (make) in
+            make.trailing.equalTo(self.snp.trailing).offset(-20)
+            make.top.equalTo(self.snp.top).offset(10)
+            make.size.equalTo(CGSize(width: 20, height: 20))
+        }
+        
+        dimView.snp.makeConstraints { (make) in
+            make.top.equalTo(self.safeAreaLayoutGuide.snp.top)
+            make.trailing.equalTo(self.snp.trailing)
+            make.leading.equalTo(self.snp.leading)
+            make.height.equalTo(2000)
+        }
+//        self.snp.makeConstraints { make in
+//            make.bottom.equalTo(setStatusButton.snp.bottom).offset(20)
+//        }
+
+    }
     
     @objc func backwardsAnimation() {
         animate2()
-
+        
     }
     @objc func tap() {
         animate()
@@ -179,8 +182,8 @@ class ProfileHeaderView: UIView {
     @objc func buttonPressed(){
         statusLabel.text = status
         statusTextField.text = ""
-        }
-
+    }
+    
     func animate() {
         UIView.animateKeyframes(withDuration: 0.5, delay: 0, options: [], animations: {
             UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 0.5) {
@@ -191,7 +194,7 @@ class ProfileHeaderView: UIView {
                 self.avatarImageView.center = CGPoint(x: (self.window?.bounds.midX)!, y:(self.window?.bounds.midY)! - (self.window?.safeAreaInsets.bottom)! - (self.window?.safeAreaInsets.top)!)
             }
             UIView.addKeyframe(withRelativeStartTime: 0.5, relativeDuration: 0.3) {
-                    self.closeButton.isHidden = false
+                self.closeButton.isHidden = false
             }
         })
     }
@@ -209,15 +212,14 @@ class ProfileHeaderView: UIView {
                 self.closeButton.isHidden = true
             }
         }, completion: {_ in self.dimView.isHidden = true})
-       // self.dimView.isHidden = true
     }
 }
 
-    
 
-    
 
-    
+
+
+
 
 
 

@@ -85,12 +85,12 @@
 			isa = PBXGroup;
 			children = (
 				CE8D6E5E26A9B0EE00A25380 /* Profile */,
-				CE8D6E0C26A3069000A25380 /* AppDelegate.swift */,
 				CE8D6E0E26A3069000A25380 /* SceneDelegate.swift */,
+				CE8D6E0C26A3069000A25380 /* AppDelegate.swift */,
 				CE8D6E1026A3069000A25380 /* ViewController.swift */,
 				CE8D6E1526A3069900A25380 /* Assets.xcassets */,
-				CE8D6E1726A3069900A25380 /* LaunchScreen.storyboard */,
 				CE8D6E1A26A3069900A25380 /* Info.plist */,
+				CE8D6E1726A3069900A25380 /* LaunchScreen.storyboard */,
 				CE8D6E2226A309F900A25380 /* FeedViewController.swift */,
 				CE8D6E2826A30EFD00A25380 /* PostViewController.swift */,
 				CE8D6E2F26A464E100A25380 /* InfoViewController.swift */,
@@ -130,6 +130,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				CEA4E98727D4A3C300841D3A /* PBXTargetDependency */,
 			);
 			name = Navigation;
 			packageProductDependencies = (
@@ -212,6 +213,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		CEA4E98727D4A3C300841D3A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			productRef = CEA4E98627D4A3C300841D3A /* SnapKit */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		CE8D6E1726A3069900A25380 /* LaunchScreen.storyboard */ = {
@@ -347,12 +355,14 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = TDYKKCNQAF;
 				INFOPLIST_FILE = Navigation/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = ss.Navigation;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = simon.Navigation;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -365,12 +375,14 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = TDYKKCNQAF;
 				INFOPLIST_FILE = Navigation/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = ss.Navigation;
+				ONLY_ACTIVE_ARCH = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = simon.Navigation;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -413,6 +425,11 @@
 
 /* Begin XCSwiftPackageProductDependency section */
 		CE278C2B27ADA343002616D0 /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CE278C2A27ADA343002616D0 /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
+		};
+		CEA4E98627D4A3C300841D3A /* SnapKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = CE278C2A27ADA343002616D0 /* XCRemoteSwiftPackageReference "SnapKit" */;
 			productName = SnapKit;

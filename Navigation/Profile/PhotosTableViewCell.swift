@@ -47,7 +47,6 @@ class PhotosTableViewCell: UITableViewCell {
     }()
     
     private func setupViews()  {
-        translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(photosLabel)
         contentView.addSubview(viewAllButton)
         contentView.addSubview(collectionView)

@@ -69,13 +69,15 @@ class LoginViewController: UIViewController {
     @objc func secureTypeOn(_ textField: UITextField){
         textField.isSecureTextEntry = true
     }
-    var vc: ProfileViewController? = nil
+
     @objc func buttonPressed() {
+        var vc: ProfileViewController? = nil
         let instanceUser = CurrentUserService()
         selectedUser = instanceUser.UserDataCollect(userName: userName)
-    //    ProfileTableHeaderView().profileHeader.selectedUser = selectedUser
         vc = ProfileViewController(user: selectedUser)
-        navigationController?.pushViewController(vc ?? ProfileViewController(user: UserStorage().userTester), animated: false)
+        let guardUserService = CurrentUserService()
+        navigationController?.pushViewController(vc ?? ProfileViewController(user:
+        guardUserService.UserDataCollect(userName: "Test User")), animated: false)
     }
     
     @objc func passwordFieldTapped(_ textField: UITextField){

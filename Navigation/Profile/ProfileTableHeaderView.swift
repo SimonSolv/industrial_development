@@ -1,14 +1,8 @@
-
 import UIKit
+import SnapKit
 
 class ProfileTableHeaderView: UITableViewHeaderFooterView {
-    let profileHeader: ProfileHeaderView = {
-        let view = ProfileHeaderView()
-   //     view.selectedUser = UserStorage().userCurrent
-   //     print (view.selectedUser?.name ?? "Code1")
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
+    let profileHeader = ProfileHeaderView()
     override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
         setupViews()
@@ -25,15 +19,17 @@ extension ProfileTableHeaderView {
     private func setupViews() {
         
         contentView.addSubview(profileHeader)
-   
-        let constraints = [
-            
-            profileHeader.topAnchor.constraint(equalTo: contentView.topAnchor),
-            profileHeader.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
-            profileHeader.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            profileHeader.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            
-        ]
-        NSLayoutConstraint.activate(constraints)
+        
+//        contentView.snp.makeConstraints { make in
+//            make.trailing.leading.equalToSuperview()
+//            
+//        }
+        
+        profileHeader.snp.makeConstraints { make in
+            make.leading.equalTo(contentView.snp.leading)
+            make.trailing.equalTo(contentView.snp.trailing)
+            make.top.equalTo(contentView.snp.top)
+            make.bottom.equalTo(contentView.snp.bottom)
+        }
     }
 }
