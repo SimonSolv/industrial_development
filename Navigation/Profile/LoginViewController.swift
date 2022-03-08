@@ -3,6 +3,9 @@ import UIKit
 
 class LoginViewController: UIViewController {
     let mainView = UIScrollView()
+    var delegate: LoginInspector?
+    public var userName: String? = nil
+    public var userPassword: String? = nil
     let contentView = UIView()
     let logoImageView: UIView = {
         let image: UIImageView = UIImageView()
@@ -32,6 +35,7 @@ class LoginViewController: UIViewController {
         textfield.leftViewMode = .always
         textfield.text = "Email or phone"
         textfield.translatesAutoresizingMaskIntoConstraints = false
+        textfield.addTarget(self, action: #selector(loginTextChanged), for: .editingChanged)
         textfield.addTarget(self, action: #selector(passwordFieldTapped), for: .editingDidBegin)
         return textfield
     }()
@@ -44,6 +48,7 @@ class LoginViewController: UIViewController {
         textfield.textColor = .lightGray
         textfield.text = "Password"
         textfield.translatesAutoresizingMaskIntoConstraints = false
+        textfield.addTarget(self, action: #selector(passwordTextChanged), for: .editingChanged)
         textfield.addTarget(self, action: #selector(passwordFieldTapped), for: .editingDidBegin)
         textfield.addTarget(self, action: #selector(secureTypeOn), for: .editingDidBegin)
         return textfield
@@ -59,16 +64,47 @@ class LoginViewController: UIViewController {
         return view
     }()
     
+    let wrongPswdView: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textColor = .red
+        label.text = "Неверный логин или пароль"
+        label.font = .systemFont(ofSize: 15)
+        return label
+    }()
+    
+    @objc func loginTextChanged(_ textField: UITextField){
+        userName = textField.text
+        wrongPswdView.isHidden = true
+        inputSourceView.layer.borderColor = UIColor.lightGray.cgColor
+    }
+    
+    @objc func passwordTextChanged(_ textField: UITextField){
+        userPassword = textField.text
+        wrongPswdView.isHidden = true
+        inputSourceView.layer.borderColor = UIColor.lightGray.cgColor
+  //      print(LoginInspector().checkPswd(login: userName!, password: userPassword!))
+    }
+    
     @objc func secureTypeOn(_ textField: UITextField){
         textField.isSecureTextEntry = true
     }
     
     @objc func buttonPressed() {
-        let vc = ProfileViewController()
-        navigationController?.pushViewController(vc, animated: false)
+        if delegate?.checkPswd(login: userName ?? "0", password: userPassword ?? "0") == true {
+            let vc = ProfileViewController()
+            navigationController?.pushViewController(vc, animated: false)
+        }
+        else {
+            inputSourceView.layer.borderColor = UIColor.systemRed.cgColor
+            wrongPswdView.isHidden = false
+        }
+        
     }
     
     @objc func passwordFieldTapped(_ textField: UITextField){
+        wrongPswdView.isHidden = true
+        inputSourceView.layer.borderColor = UIColor.lightGray.cgColor
         textField.text = ""
         textField.textColor = .black
     }
@@ -106,6 +142,8 @@ class LoginViewController: UIViewController {
         mainView.addSubview(contentView)
         contentView.addSubview(logoImageView)
         contentView.addSubview(loginButton)
+        contentView.addSubview(wrongPswdView)
+        wrongPswdView.isHidden = true
         contentView.addSubview(inputSourceView)
         inputSourceView.addSubview(loginTextField)
         inputSourceView.addSubview(passwordTextField)
@@ -116,6 +154,7 @@ class LoginViewController: UIViewController {
     
     func setupConstraits() {
         let constraints = [
+            
             mainView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             mainView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
             mainView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
@@ -137,6 +176,9 @@ class LoginViewController: UIViewController {
             loginButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor,constant: -10),
             loginButton.heightAnchor.constraint(equalToConstant: 50),
             loginButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+            
+            wrongPswdView.topAnchor.constraint(equalTo: loginButton.bottomAnchor, constant: 5),
+            wrongPswdView.centerXAnchor.constraint(equalTo: loginButton.centerXAnchor),
 
             inputSourceView.topAnchor.constraint(equalTo: contentView.topAnchor,constant: 340),
             inputSourceView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor,constant: 10),
@@ -176,4 +218,9 @@ private extension LoginViewController {
         mainView.contentInset.bottom = .zero
         mainView.verticalScrollIndicatorInsets = .zero
     }
+    
 }
+protocol LoginViewControllerDelegate {
+    func checkPswd (login: String, password: String) -> Bool
+}
+

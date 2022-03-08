@@ -86,7 +86,7 @@ class ProfileHeaderView: UIView {
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tap))
 
- //       addGestureRecognizer(tapGesture)
+        addGestureRecognizer(tapGesture)
         translatesAutoresizingMaskIntoConstraints = false
         statusLabel.text = status
         backgroundColor = .lightGray
@@ -113,12 +113,12 @@ class ProfileHeaderView: UIView {
     
     func setupConstraints() {
 
-            avatarImageView.snp.makeConstraints { (make) in
-                make.top.equalTo(self.safeAreaLayoutGuide.snp.top).offset(36)
-                make.leading.equalTo(self.safeAreaLayoutGuide.snp.leading).offset(16)
-                make.size.equalTo(CGSize(width: 103, height: 103))
-            }
-
+        avatarImageView.snp.makeConstraints { (make) in
+            make.top.equalTo(self.safeAreaLayoutGuide.snp.top).offset(36)
+            make.leading.equalTo(self.safeAreaLayoutGuide.snp.leading).offset(16)
+            make.size.equalTo(CGSize(width: 103, height: 103))
+        }
+        
         fullNameLabel.snp.makeConstraints { (make) in
             make.leading.equalTo(avatarImageView.snp.trailing).offset(16)
             make.trailing.equalTo(self.snp.trailing).offset(-16)
@@ -160,8 +160,8 @@ class ProfileHeaderView: UIView {
 
         }
         self.snp.makeConstraints { (make) in
-            make.top.equalTo(safeAreaLayoutGuide.snp.top).offset(-30)
-            make.bottom.equalTo(setStatusButton).offset(15)
+   //         make.top.equalTo(safeAreaLayoutGuide.snp.top).offset(-30)
+            make.bottom.equalTo(setStatusButton.snp.bottom).offset(15)
         }
 
     }
@@ -202,9 +202,10 @@ class ProfileHeaderView: UIView {
         UIView.animateKeyframes(withDuration: 0.5,delay: 0, options: [], animations: {
             UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 0.5) {
                 self.dimView.layer.opacity = 0
+                self.sendSubviewToBack(self.dimView)
                 self.avatarImageView.layer.cornerRadius = 50
                 self.avatarImageView.transform = CGAffineTransform(scaleX: 1 , y: 1)
-                self.avatarImageView.center = CGPoint(x: 66, y: 66)
+                self.avatarImageView.center = CGPoint(x: 66, y: 86)
                 
             }
             UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 0.3) {
