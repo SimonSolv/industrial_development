@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		80E82B75024F12407826DED2 /* Pods_Navigation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87C8C108E9E3CDAE8FF0EE04 /* Pods_Navigation.framework */; };
+		CE17063227D512D5000F3CC0 /* Checker.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE17063127D512D5000F3CC0 /* Checker.swift */; };
+		CE17063427D53A6A000F3CC0 /* LoginInspector.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE17063327D53A6A000F3CC0 /* LoginInspector.swift */; };
 		CE524CFC26FCFC6C009C182B /* PhotosTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE524CFB26FCFC6C009C182B /* PhotosTableViewCell.swift */; };
 		CE524CFF26FE47E3009C182B /* PhotoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE524CFE26FE47E3009C182B /* PhotoCollectionViewCell.swift */; };
 		CE524D652702314B009C182B /* GalleryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE524D642702314B009C182B /* GalleryViewController.swift */; };
@@ -32,6 +34,8 @@
 /* Begin PBXFileReference section */
 		2F49EAE980336B4FDFFDF2F7 /* Pods-Navigation.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Navigation.release.xcconfig"; path = "Target Support Files/Pods-Navigation/Pods-Navigation.release.xcconfig"; sourceTree = "<group>"; };
 		87C8C108E9E3CDAE8FF0EE04 /* Pods_Navigation.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Navigation.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		CE17063127D512D5000F3CC0 /* Checker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Checker.swift; sourceTree = "<group>"; };
+		CE17063327D53A6A000F3CC0 /* LoginInspector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginInspector.swift; sourceTree = "<group>"; };
 		CE524CFB26FCFC6C009C182B /* PhotosTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosTableViewCell.swift; sourceTree = "<group>"; };
 		CE524CFE26FE47E3009C182B /* PhotoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCollectionViewCell.swift; sourceTree = "<group>"; };
 		CE524D642702314B009C182B /* GalleryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryViewController.swift; sourceTree = "<group>"; };
@@ -133,6 +137,8 @@
 				CE524CFE26FE47E3009C182B /* PhotoCollectionViewCell.swift */,
 				CE524D642702314B009C182B /* GalleryViewController.swift */,
 				CE524D67270233AE009C182B /* GalleryCollectionViewCell.swift */,
+				CE17063127D512D5000F3CC0 /* Checker.swift */,
+				CE17063327D53A6A000F3CC0 /* LoginInspector.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -264,6 +270,8 @@
 				CE8D6E1126A3069000A25380 /* ViewController.swift in Sources */,
 				CE8D6E0D26A3069000A25380 /* AppDelegate.swift in Sources */,
 				CE8D6E3026A464E100A25380 /* InfoViewController.swift in Sources */,
+				CE17063227D512D5000F3CC0 /* Checker.swift in Sources */,
+				CE17063427D53A6A000F3CC0 /* LoginInspector.swift in Sources */,
 				CE8D6E2326A309F900A25380 /* FeedViewController.swift in Sources */,
 				CED2D0C426E9212700ED0387 /* ProfileTableHeaderView.swift in Sources */,
 				CE524CFC26FCFC6C009C182B /* PhotosTableViewCell.swift in Sources */,
