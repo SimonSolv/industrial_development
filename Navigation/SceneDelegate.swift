@@ -18,7 +18,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             let vc = LoginViewController()
             vc.tabBarItem = UITabBarItem(title: "Profile", image: .init(imageLiteralResourceName: "profile") , tag: 0)
             vc.view.backgroundColor = .white
-            vc.delegate = LoginInspector()
+            let myFabric = MyLoginFactory()
+            vc.delegate = myFabric.factory()
             return vc
         }()
 

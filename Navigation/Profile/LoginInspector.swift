@@ -12,3 +12,14 @@ class LoginInspector: LoginViewControllerDelegate {
         }
     }
 }
+protocol LoginFactory {
+    func factory() -> LoginInspector
+}
+
+class MyLoginFactory: LoginFactory  {
+    func factory() -> LoginInspector {
+        let v = LoginInspector()
+        return v
+    }
+}
+
