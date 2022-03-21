@@ -10,10 +10,14 @@ import SnapKit
 
 class GalleryCollectionViewCell: UICollectionViewCell {
     static let identifier = "GalleryCollectionViewCell"
-    var sourse: ImageSet? {
+
+    var rowForImage: Int = 0
+    var source: PhotoStorage? {
         didSet {
-            image.image = sourse?.image
+            rowForImage = source!.photoIndex
+            image.image = source?.photoGrid[rowForImage]
         }
+        
     }
 
     let image: UIImageView = {
@@ -43,7 +47,6 @@ class GalleryCollectionViewCell: UICollectionViewCell {
     private func setupViews() {
         contentView.addSubview(image)
         image.addSubview(galleryButton)
-        translatesAutoresizingMaskIntoConstraints = false
         image.snp.makeConstraints { (make) -> Void in
             make.top.equalTo(contentView.snp.top)
             make.trailing.equalTo(contentView.snp.trailing)

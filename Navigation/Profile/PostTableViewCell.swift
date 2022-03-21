@@ -82,7 +82,6 @@ extension PostTableViewCell {
     }
     
     private func setupViews() {
-        //        translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(postImageView)
         contentView.addSubview(postTitle)
         contentView.addSubview(postDescription)
