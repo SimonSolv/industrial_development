@@ -2,14 +2,16 @@ import UIKit
 
 class PhotoCollectionViewCell: UICollectionViewCell {
     static let  identifier = "lib"
-    
-    var source: ImageSet? {
+    var rowForImage: Int = 0
+//    let superD = PhotosTableViewCell()
+    var source: PhotoStorage? {
         didSet {
-            photoImage.image = source?.image
-            rowForImage = (source?.rowIndex)!
+            rowForImage = source!.photoIndex
+            print (rowForImage)
+            photoImage.image = source?.photoGrid[rowForImage]
         }
     }
-    var rowForImage: Int = 0
+    
     let photoImage: UIImageView = {
        let image = UIImageView()
         image.translatesAutoresizingMaskIntoConstraints = false

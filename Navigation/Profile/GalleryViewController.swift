@@ -11,6 +11,8 @@ class GalleryViewController: UIViewController {
         view.backgroundColor = .white
         return view
     }()
+
+    var photos: PhotoStorage?
     
     private func setupViews() {
         
@@ -45,14 +47,17 @@ class GalleryViewController: UIViewController {
     }
     
 }
-extension GalleryViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+
+
+extension GalleryViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout  {
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return PhotoStorage.photoGrid.count
+        return 15
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GalleryCollectionViewCell.identifier, for: indexPath) as! GalleryCollectionViewCell
-        cell.sourse = PhotoStorage.photoGrid[indexPath.row]
+        cell.source = photos
         return cell
     }
     

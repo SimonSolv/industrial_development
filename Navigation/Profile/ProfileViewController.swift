@@ -39,9 +39,12 @@ class ProfileViewController: UIViewController {
         }
 
     }
+    
     @objc func openGallery() {
         let vc = GalleryViewController()
+        vc.photos = PhotosTableViewCell().photoSource
         navigationController?.pushViewController(vc, animated: true)
+        PhotosTableViewCell().photosPublisher.rechargeImageLibrary()
 
     }
     

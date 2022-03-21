@@ -1,4 +1,5 @@
 import UIKit
+import iOSIntPackage
 
 struct PostBody {
     let title: String
@@ -18,33 +19,36 @@ struct PostAtributes {
     var footer: String? = nil
 }
 let header: ProfileTableHeaderView = {
-   let view = ProfileTableHeaderView()
+    let view = ProfileTableHeaderView()
     return view
 }()
 struct PhotoStorage {
-    static let photoGrid = [ ImageSet(rowIndex: 0, image: UIImage(named: "Image1")!),
-                             ImageSet(rowIndex: 1, image: UIImage(named: "Image2")!),
-                             ImageSet(rowIndex: 2, image: UIImage(named: "Image3")!),
-                             ImageSet(rowIndex: 3, image: UIImage(named: "Image4")!),
-                             ImageSet(rowIndex: 4, image: UIImage(named: "Image5")!),
-                             ImageSet(rowIndex: 5, image: UIImage(named: "Image6")!),
-                             ImageSet(rowIndex: 6, image: UIImage(named: "Image7")!),
-                             ImageSet(rowIndex: 7, image: UIImage(named: "Image8")!),
-                             ImageSet(rowIndex: 8, image: UIImage(named: "Image9")!),
-                             ImageSet(rowIndex: 9, image: UIImage(named: "Image10")!),
-                             ImageSet(rowIndex: 10, image: UIImage(named: "Image11")!),
-                             ImageSet(rowIndex: 11, image: UIImage(named: "Image12")!),
-                             ImageSet(rowIndex: 12, image: UIImage(named: "Image13")!),
-                             ImageSet(rowIndex: 13, image: UIImage(named: "Image14")!),
-                             ImageSet(rowIndex: 14, image: UIImage(named: "Image15")!),
-                             ImageSet(rowIndex: 15, image: UIImage(named: "Image16")!),
-                             ImageSet(rowIndex: 16, image: UIImage(named: "Image17")!),
-                             ImageSet(rowIndex: 17, image: UIImage(named: "Image18")!),
-                             ImageSet(rowIndex: 18, image: UIImage(named: "Image19")!),
-                             ImageSet(rowIndex: 19, image: UIImage(named: "Image20")!),
-
-    ]
+    var photoGrid: [UIImage] = [UIImage(named: "Image1")!]
+    var photoIndex: Int = 0
+//    static let photoGrid = [ ImageSet(rowIndex: 0, image: UIImage(named: "Image1")!),
+//                             ImageSet(rowIndex: 1, image: UIImage(named: "Image2")!),
+//                             ImageSet(rowIndex: 2, image: UIImage(named: "Image3")!),
+//                             ImageSet(rowIndex: 3, image: UIImage(named: "Image4")!),
+//                             ImageSet(rowIndex: 4, image: UIImage(named: "Image5")!),
+//                             ImageSet(rowIndex: 5, image: UIImage(named: "Image6")!),
+//                             ImageSet(rowIndex: 6, image: UIImage(named: "Image7")!),
+//                             ImageSet(rowIndex: 7, image: UIImage(named: "Image8")!),
+//                             ImageSet(rowIndex: 8, image: UIImage(named: "Image9")!),
+//                             ImageSet(rowIndex: 9, image: UIImage(named: "Image10")!),
+//                             ImageSet(rowIndex: 10, image: UIImage(named: "Image11")!),
+//                             ImageSet(rowIndex: 11, image: UIImage(named: "Image12")!),
+//                             ImageSet(rowIndex: 12, image: UIImage(named: "Image13")!),
+//                             ImageSet(rowIndex: 13, image: UIImage(named: "Image14")!),
+//                             ImageSet(rowIndex: 14, image: UIImage(named: "Image15")!),
+//                             ImageSet(rowIndex: 15, image: UIImage(named: "Image16")!),
+//                             ImageSet(rowIndex: 16, image: UIImage(named: "Image17")!),
+//                             ImageSet(rowIndex: 17, image: UIImage(named: "Image18")!),
+//                             ImageSet(rowIndex: 18, image: UIImage(named: "Image19")!),
+//                             ImageSet(rowIndex: 19, image: UIImage(named: "Image20")!),
+//
+//    ]
 }
+
 
 struct PostStorage {
     static let tableModel = [

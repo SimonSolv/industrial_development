@@ -10,6 +10,8 @@ import iOSIntPackage
 
 class PhotosTableViewCell: UITableViewCell {
     static let  identifier = "photos"
+    public var photoSource = PhotoStorage()
+    public let photosPublisher = ImagePublisherFacade()
     
     private lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -35,7 +37,7 @@ class PhotosTableViewCell: UITableViewCell {
         btn.setImage(UIImage(named: "rightArrow"), for: .normal)
         btn.translatesAutoresizingMaskIntoConstraints = false
         btn.addTarget(self, action: #selector(ProfileViewController.openGallery), for: .touchUpInside)
-       return btn
+        return btn
     }()
     
     let photosLabel: UILabel = {
@@ -47,8 +49,9 @@ class PhotosTableViewCell: UITableViewCell {
         return label
     }()
     
+
+    
     private func setupViews()  {
- //       translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(photosLabel)
         contentView.addSubview(viewAllButton)
         contentView.addSubview(collectionView)
@@ -76,12 +79,28 @@ class PhotosTableViewCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        photosPublisher.subscribe(self)
+        photosPublisher.addImagesWithTimer(time: 1, repeat: 15, userImages: [UIImage(named: "Image1")!,
+                                                                             UIImage(named: "Image2")!,
+                                                                             UIImage(named: "Image3")!,
+                                                                             UIImage(named: "Image4")!,
+                                                                             UIImage(named: "Image5")!,
+                                                                             UIImage(named: "Image6")!,
+                                                                             UIImage(named: "Image7")!,
+                                                                             UIImage(named: "Image8")!,
+                                                                             UIImage(named: "Image9")!,
+                                                                             UIImage(named: "Image10")!,
+                                                                             UIImage(named: "Image11")!,
+                                                                             UIImage(named: "Image12")!,
+                                                                             UIImage(named: "Image13")!,
+                                                                             UIImage(named: "Image14")!,
+                                                                             UIImage(named: "Image15")!,
+                                                                             UIImage(named: "Image16")!])
         setupViews()
         setupConstraints()
         
     }
-    
-    
+
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         setupViews()
@@ -90,19 +109,28 @@ class PhotosTableViewCell: UITableViewCell {
 
 }
 
-extension PhotosTableViewCell: UICollectionViewDataSource {
+extension PhotosTableViewCell: UICollectionViewDataSource, ImageLibrarySubscriber {
+    
+    func receive(images: [UIImage]) {
+        photoSource.photoGrid = images
+        collectionView.reloadData()
+    }
+    
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 4
+        return photoSource.photoGrid.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PhotoCollectionViewCell.identifier, for: indexPath) as! PhotoCollectionViewCell
-        cell.source = PhotoStorage.photoGrid[indexPath.row]
+        photoSource.photoIndex = indexPath.row
+//        cell.rowForImage = indexPath.row-1
+        cell.source = photoSource
+        
         return cell
     }
     
