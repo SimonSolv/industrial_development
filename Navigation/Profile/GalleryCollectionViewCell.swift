@@ -25,10 +25,13 @@ class GalleryCollectionViewCell: UICollectionViewCell {
         return image
     }()
     
-    let galleryButton: UIButton = {
-        let btn = UIButton()
+    let galleryButton: CustomButton = {
+        let btn = CustomButton(title: "", titleColor: .white) {
+            ProfileViewController().openGallery()
+            print("GalleryButton Pressed")
+        }
         btn.translatesAutoresizingMaskIntoConstraints = false
-        btn.addTarget(self, action: #selector(ProfileViewController.openGallery), for: .touchUpInside)
+  //      btn.addTarget(self, action: #selector(ProfileViewController.openGallery), for: .touchUpInside)
        return btn
     }()
     

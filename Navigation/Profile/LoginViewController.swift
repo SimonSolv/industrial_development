@@ -2,11 +2,17 @@ import Foundation
 import UIKit
 
 class LoginViewController: UIViewController {
+    
     let mainView = UIScrollView()
+    
     var delegate: LoginInspector?
+    
     public var userName: String? = nil
+    
     public var userPassword: String? = nil
+    
     let contentView = UIView()
+    
     let logoImageView: UIView = {
         let image: UIImageView = UIImageView()
         image.image = UIImage(named: "VKlogo")
@@ -14,16 +20,25 @@ class LoginViewController: UIViewController {
         image.translatesAutoresizingMaskIntoConstraints = false
         return image
     }()
-    var loginButton: UIButton = {
-        var btn: UIButton = UIButton()
+    
+    lazy var loginButton: CustomButton = {
+        var btn: CustomButton = CustomButton(title: "Log in", titleColor: .white) {
+            if self.delegate?.checkPswd(login: self.userName ?? "0", password: self.userPassword ?? "0") == true {
+                let vc = ProfileViewController()
+                self.navigationController?.pushViewController(vc, animated: false)
+            }
+            else {
+                self.inputSourceView.layer.borderColor = UIColor.systemRed.cgColor
+                self.wrongPswdView.isHidden = false
+            }
+        }
         btn.setBackgroundImage(UIImage(named: "blue_pixel"), for: .normal)
         btn.layer.cornerRadius = 10
         btn.clipsToBounds = true
-        btn.addTarget(self, action: #selector(buttonPressed), for: .touchUpInside)
-        btn.setTitle("Log in", for: .normal)
         btn.translatesAutoresizingMaskIntoConstraints = false
         return btn
     }()
+   
     var loginTextField: UITextField = {
         var textfield: UITextField = UITextField(frame: CGRect(x: 0, y: 0, width: 0, height: 50))
         textfield.backgroundColor = .systemGray6
@@ -39,6 +54,7 @@ class LoginViewController: UIViewController {
         textfield.addTarget(self, action: #selector(passwordFieldTapped), for: .editingDidBegin)
         return textfield
     }()
+    
     var passwordTextField: UITextField = {
         var textfield: UITextField = UITextField(frame: CGRect(x: 0, y: 0, width: 0, height: 50))
         textfield.backgroundColor = .systemGray6
@@ -53,6 +69,7 @@ class LoginViewController: UIViewController {
         textfield.addTarget(self, action: #selector(secureTypeOn), for: .editingDidBegin)
         return textfield
     }()
+    
     var inputSourceView: UIStackView = {
         var view = UIStackView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -73,36 +90,36 @@ class LoginViewController: UIViewController {
         return label
     }()
     
-    @objc func loginTextChanged(_ textField: UITextField){
+    @objc func loginTextChanged(_ textField: UITextField) {
         userName = textField.text
         wrongPswdView.isHidden = true
         inputSourceView.layer.borderColor = UIColor.lightGray.cgColor
     }
     
-    @objc func passwordTextChanged(_ textField: UITextField){
+    @objc func passwordTextChanged(_ textField: UITextField) {
         userPassword = textField.text
         wrongPswdView.isHidden = true
         inputSourceView.layer.borderColor = UIColor.lightGray.cgColor
   //      print(LoginInspector().checkPswd(login: userName!, password: userPassword!))
     }
     
-    @objc func secureTypeOn(_ textField: UITextField){
+    @objc func secureTypeOn(_ textField: UITextField) {
         textField.isSecureTextEntry = true
     }
     
-    @objc func buttonPressed() {
-        if delegate?.checkPswd(login: userName ?? "0", password: userPassword ?? "0") == true {
-            let vc = ProfileViewController()
-            navigationController?.pushViewController(vc, animated: false)
-        }
-        else {
-            inputSourceView.layer.borderColor = UIColor.systemRed.cgColor
-            wrongPswdView.isHidden = false
-        }
+//    @objc func buttonPressed() {
+//        if delegate?.checkPswd(login: userName ?? "0", password: userPassword ?? "0") == true {
+//            let vc = ProfileViewController()
+//            navigationController?.pushViewController(vc, animated: false)
+//        }
+//        else {
+//            inputSourceView.layer.borderColor = UIColor.systemRed.cgColor
+//            wrongPswdView.isHidden = false
+//        }
         
-    }
+//    }
     
-    @objc func passwordFieldTapped(_ textField: UITextField){
+    @objc func passwordFieldTapped(_ textField: UITextField) {
         wrongPswdView.isHidden = true
         inputSourceView.layer.borderColor = UIColor.lightGray.cgColor
         textField.text = ""

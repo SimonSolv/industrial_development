@@ -34,13 +34,12 @@ class ProfileHeaderView: UIView {
         return status
     }()
 
-    let closeButton: UIButton = {
-        var btn = UIButton()
+    lazy var closeButton: CustomButton = {
+        let btn = CustomButton(title: "X", titleColor: .white) {
+            self.animate2()
+        }
         btn.translatesAutoresizingMaskIntoConstraints = false
         btn.layer.cornerRadius = 1
-        btn.setTitleColor(.white, for: .normal)
-        btn.addTarget(self , action: #selector(backwardsAnimation), for: .touchUpInside)
-        btn.setTitle("X", for: .normal)
         return btn
     }()
     
@@ -67,13 +66,14 @@ class ProfileHeaderView: UIView {
         return textfield
     }()
     
-    var setStatusButton: UIButton = {
-        var btn = UIButton()
+    lazy var setStatusButton: CustomButton = {
+        var btn = CustomButton(title: "Set status", titleColor: .white) {
+            self.statusLabel.text = self.status
+            self.statusTextField.text = ""
+        }
         btn.translatesAutoresizingMaskIntoConstraints = false
         btn.backgroundColor = .blue
         btn.layer.cornerRadius = 12
-        btn.addTarget(self , action: #selector(buttonPressed), for: .touchUpInside)
-        btn.setTitle("Set status", for: .normal)
         btn.layer.shadowColor = UIColor.black.cgColor
         btn.layer.shadowOffset = CGSize(width: 5, height: 5)
         btn.layer.shadowRadius = 5
@@ -91,18 +91,7 @@ class ProfileHeaderView: UIView {
         statusLabel.text = status
         backgroundColor = .lightGray
         avatarImageView.addGestureRecognizer(tapGesture)
-
-        addSubview(setStatusButton)
-        addSubview(avatarImageView)
-        addSubview(fullNameLabel)
-        addSubview(statusLabel)
-        addSubview(statusTextField)
-        addSubview(dimView)
-        addSubview(closeButton)
-        
-        closeButton.isHidden = true
-        dimView.isHidden = true
-        bringSubviewToFront(avatarImageView)
+        setupViews()
         setupConstraints()
 
     }
@@ -111,7 +100,7 @@ class ProfileHeaderView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setupConstraints() {
+    private func setupConstraints() {
 
         avatarImageView.snp.makeConstraints { (make) in
             make.top.equalTo(self.safeAreaLayoutGuide.snp.top).offset(36)
@@ -166,22 +155,26 @@ class ProfileHeaderView: UIView {
 
     }
     
-    @objc func backwardsAnimation() {
-        animate2()
-
+    private func setupViews() {
+        addSubview(setStatusButton)
+        addSubview(avatarImageView)
+        addSubview(fullNameLabel)
+        addSubview(statusLabel)
+        addSubview(statusTextField)
+        addSubview(dimView)
+        addSubview(closeButton)
+        bringSubviewToFront(avatarImageView)
+        closeButton.isHidden = true
+        dimView.isHidden = true
     }
+
     @objc func tap() {
         animate()
     }
     
-    @objc func statusTextChanged(_ textField: UITextField){
+    @objc func statusTextChanged(_ textField: UITextField) {
         status = textField.text
     }
-    
-    @objc func buttonPressed(){
-        statusLabel.text = status
-        statusTextField.text = ""
-        }
 
     func animate() {
         UIView.animateKeyframes(withDuration: 0.5, delay: 0, options: [], animations: {
@@ -212,7 +205,6 @@ class ProfileHeaderView: UIView {
                 self.closeButton.isHidden = true
             }
         }, completion: {_ in self.dimView.isHidden = true})
-       // self.dimView.isHidden = true
     }
 }
 

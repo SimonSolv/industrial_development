@@ -5,15 +5,16 @@ class ProfileViewController: UIViewController {
     let tableView: UITableView = {
         var table = UITableView()
         table.frame = .zero
-        table.translatesAutoresizingMaskIntoConstraints = false
         return table
     }()
     
     let cellID = "CellID"
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.isHidden = true
     }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .lightGray
@@ -39,10 +40,10 @@ class ProfileViewController: UIViewController {
         }
 
     }
-    @objc func openGallery() {
+    
+    func openGallery() {
         let vc = GalleryViewController()
         navigationController?.pushViewController(vc, animated: true)
-
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -61,7 +62,8 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate{
     }
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        return PostStorage.tableModel[section].sectionHeader
+        let view = PostStorage.tableModel[section].sectionHeader
+        return view
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

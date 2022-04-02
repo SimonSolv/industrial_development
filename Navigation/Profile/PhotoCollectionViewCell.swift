@@ -9,7 +9,9 @@ class PhotoCollectionViewCell: UICollectionViewCell {
             rowForImage = (source?.rowIndex)!
         }
     }
+    
     var rowForImage: Int = 0
+    
     let photoImage: UIImageView = {
        let image = UIImageView()
         image.translatesAutoresizingMaskIntoConstraints = false
@@ -20,6 +22,7 @@ class PhotoCollectionViewCell: UICollectionViewCell {
     }()
     
     private func setupView() {
+        
         contentView.addSubview(photoImage)
         
         let constraints = [

@@ -11,6 +11,8 @@ import iOSIntPackage
 class PhotosTableViewCell: UITableViewCell {
     static let  identifier = "photos"
     
+    var onTap: (() -> Void)?
+    
     private lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
@@ -30,11 +32,14 @@ class PhotosTableViewCell: UITableViewCell {
         }
     }
     
-    let viewAllButton: UIButton = {
-        let btn = UIButton()
+    lazy var viewAllButton: CustomButton = {
+        let btn = CustomButton(title: "", titleColor: .white) {
+ //           ProfileViewController.openGallery()
+            print("ViewAllButton tapped")
+        }
         btn.setImage(UIImage(named: "rightArrow"), for: .normal)
         btn.translatesAutoresizingMaskIntoConstraints = false
-        btn.addTarget(self, action: #selector(ProfileViewController.openGallery), for: .touchUpInside)
+//        btn.addTarget(self, action: #selector(ProfileViewController.openGallery), for: .touchUpInside)
        return btn
     }()
     
@@ -48,7 +53,6 @@ class PhotosTableViewCell: UITableViewCell {
     }()
     
     private func setupViews()  {
- //       translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(photosLabel)
         contentView.addSubview(viewAllButton)
         contentView.addSubview(collectionView)
@@ -80,7 +84,6 @@ class PhotosTableViewCell: UITableViewCell {
         setupConstraints()
         
     }
-    
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
@@ -123,6 +126,7 @@ extension PhotosTableViewCell: UICollectionViewDelegateFlowLayout {
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print("hooow")
+//        ProfileViewController.openGallery()
     }
 }
+
