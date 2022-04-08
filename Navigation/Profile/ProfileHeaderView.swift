@@ -55,6 +55,7 @@ class ProfileHeaderView: UIView {
         var textfield: UITextField = UITextField()
         textfield.translatesAutoresizingMaskIntoConstraints = false
         textfield.backgroundColor = .white
+        textfield.placeholder = "Enter status"
         textfield.layer.cornerRadius = 12
         textfield.layer.borderWidth = 1
         textfield.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: textfield.frame.height))

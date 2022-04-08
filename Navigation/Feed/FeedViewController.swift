@@ -15,6 +15,7 @@ class FeedViewController: UIViewController {
         textfield.layer.borderColor = UIColor.lightGray.cgColor
         textfield.font = .systemFont(ofSize: 16)
         textfield.textColor = .black
+        textfield.placeholder = "Введите проверочное слово"
         textfield.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: textfield.frame.height))
         textfield.leftViewMode = .always
         textfield.translatesAutoresizingMaskIntoConstraints = false

@@ -43,12 +43,12 @@ class LoginViewController: UIViewController {
         var textfield: UITextField = UITextField(frame: CGRect(x: 0, y: 0, width: 0, height: 50))
         textfield.backgroundColor = .systemGray6
         textfield.layer.borderWidth = 0.5
+        textfield.placeholder = "Email or phone"
         textfield.layer.borderColor = UIColor.lightGray.cgColor
         textfield.font = .systemFont(ofSize: 16)
-        textfield.textColor = .lightGray
+        textfield.textColor = .black
         textfield.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: textfield.frame.height))
         textfield.leftViewMode = .always
-        textfield.text = "Email or phone"
         textfield.translatesAutoresizingMaskIntoConstraints = false
         textfield.addTarget(self, action: #selector(loginTextChanged), for: .editingChanged)
         textfield.addTarget(self, action: #selector(passwordFieldTapped), for: .editingDidBegin)
@@ -59,10 +59,10 @@ class LoginViewController: UIViewController {
         var textfield: UITextField = UITextField(frame: CGRect(x: 0, y: 0, width: 0, height: 50))
         textfield.backgroundColor = .systemGray6
         textfield.font = .systemFont(ofSize: 15)
+        textfield.placeholder = "Password"
         textfield.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: textfield.frame.height))
         textfield.leftViewMode = .always
-        textfield.textColor = .lightGray
-        textfield.text = "Password"
+        textfield.textColor = .black
         textfield.translatesAutoresizingMaskIntoConstraints = false
         textfield.addTarget(self, action: #selector(passwordTextChanged), for: .editingChanged)
         textfield.addTarget(self, action: #selector(passwordFieldTapped), for: .editingDidBegin)
@@ -100,7 +100,6 @@ class LoginViewController: UIViewController {
         userPassword = textField.text
         wrongPswdView.isHidden = true
         inputSourceView.layer.borderColor = UIColor.lightGray.cgColor
-  //      print(LoginInspector().checkPswd(login: userName!, password: userPassword!))
     }
     
     @objc func secureTypeOn(_ textField: UITextField) {
@@ -122,8 +121,6 @@ class LoginViewController: UIViewController {
     @objc func passwordFieldTapped(_ textField: UITextField) {
         wrongPswdView.isHidden = true
         inputSourceView.layer.borderColor = UIColor.lightGray.cgColor
-        textField.text = ""
-        textField.textColor = .black
     }
     
     override func viewDidLoad() {
