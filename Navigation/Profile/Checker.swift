@@ -1,8 +1,8 @@
 import Foundation
 
 class Checker {
-    private let login: String = "0"
-    private let pswd: String = "0"
+    private let login: String = "1"
+    private let pswd: String = "1"
     static let shared: Checker = Checker()
 
     private init() {}
