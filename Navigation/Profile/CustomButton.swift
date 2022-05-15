@@ -1,101 +1,84 @@
 import UIKit
 
 final class CustomButton: UIButton {
-    
-    private var buttonAction: () -> Void
+    private var onTap: () -> Void
 
-    init(title: String, titleColor: UIColor, buttonAction: @escaping () -> Void) {
-        self.buttonAction = buttonAction
+    init(title: String, titleColor: UIColor, onTap: @escaping () -> Void) {
+        self.onTap = onTap
         super.init(frame: .zero)
         self.setTitle(title, for: .normal)
         self.setTitleColor(titleColor, for: .normal)
         self.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
     }
-    
     required init?(coder: NSCoder) {
         nil
     }
-    
     @objc private func buttonTapped() {
-        self.buttonAction()
+        self.onTap()
     }
 }
 
-//final class UIButton2: UIButton {
-//    
-//    convenience init(title: String = "",
-//                     color: UIColor,
-//                     handler: @escaping () -> Void) {
-//        self.init(primaryAction: UIAction(
-//            title: title,
-//            titleColor: color,
-//            handler: { _ in
-//                handler()
-//            }
-//        ))
-//    }
-//}
+extension CustomButton {
+    enum Style {
+        case login
+        case status
+    }
+    func setStyle(style: Style) {
+        switch style {
+        case .login:
+            self.setBackgroundImage(UIImage(named: "blue_pixel"), for: .normal)
+            self.layer.cornerRadius = 10
+            self.clipsToBounds = true
+            self.translatesAutoresizingMaskIntoConstraints = false
+        case .status:
+            self.translatesAutoresizingMaskIntoConstraints = false
+            self.backgroundColor = .blue
+            self.layer.cornerRadius = 12
+            self.layer.shadowColor = UIColor.black.cgColor
+            self.layer.shadowOffset = CGSize(width: 5, height: 5)
+            self.layer.shadowRadius = 5
+            self.layer.shadowOpacity = 1.0
+        }
+    }
+}
 
-//extension UIBarButtonItem {
-//
-//    /// Typealias for UIBarButtonItem closure.
-//    private typealias UIBarButtonItemTargetClosure = (UIBarButtonItem) -> ()
-//
-//    private class UIBarButtonItemClosureWrapper: NSObject {
-//        let closure: UIBarButtonItemTargetClosure
-//        init(_ closure: @escaping UIBarButtonItemTargetClosure) {
-//            self.closure = closure
-//        }
-//    }
-//
-//    private struct AssociatedKeys {
-//        static var targetClosure = "targetClosure"
-//    }
-//
-//    private var targetClosure: UIBarButtonItemTargetClosure? {
-//        get {
-//            guard let closureWrapper = objc_getAssociatedObject(self, &AssociatedKeys.targetClosure) as? UIBarButtonItemClosureWrapper else { return nil }
-//            return closureWrapper.closure
-//        }
-//        set(newValue) {
-//            guard let newValue = newValue else { return }
-//            objc_setAssociatedObject(self, &AssociatedKeys.targetClosure, UIBarButtonItemClosureWrapper(newValue), objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
-//        }
-//    }
-//}
-//
-//final class ViewController: UIViewController {
-//
-//    override func viewDidLoad() {
-//        super.viewDidLoad()
-//
-//        let button = UIButton(type: .system, primaryAction: UIAction(title: "Button Title", handler: { _ in
-//            print("Button tapped!")
-//        }))
-//    }
-//}
-
-//class Button: UIButton {
-//
-//    typealias DidTapButton = (Button) -> ()
-//
-//    var didTouchUpInside: DidTapButton? {
-//        didSet {
-//            if didTouchUpInside != nil {
-//                addTarget(self, action: #selector(didTouchUpInside(_:)), forControlEvents: .TouchUpInside)
-//            } else {
-//                removeTarget(self, action: #selector(didTouchUpInside(_:)), forControlEvents: .TouchUpInside)
-//            }
-//        }
-//    }
-//
-//    // MARK: - Actions
-//
-//    func didTouchUpInside(sender: UIButton) {
-//        if let handler = didTouchUpInside {
-//            handler(self)
-//        }
-//    }
-//
-//}
-//let btn222 = Button(
+extension UITextField {
+    enum Style {
+        case login
+        case status
+        case other
+    }
+    func setStyle(style: Style) {
+        switch style {
+        case .login:
+            self.backgroundColor = .systemGray6
+            self.layer.borderWidth = 0.5
+            self.layer.borderColor = UIColor.lightGray.cgColor
+            self.font = .systemFont(ofSize: 16)
+            self.textColor = .black
+            self.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: self.frame.height))
+            self.leftViewMode = .always
+            self.translatesAutoresizingMaskIntoConstraints = false
+        case .status:
+            self.translatesAutoresizingMaskIntoConstraints = false
+            self.backgroundColor = .white
+            self.layer.cornerRadius = 12
+            self.layer.borderWidth = 1
+            self.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: self.frame.height))
+            self.leftViewMode = .always
+            self.layer.borderColor = UIColor.black.cgColor
+            self.font = .systemFont(ofSize: 15)
+            self.textColor = .black
+        case .other:
+            self.layer.cornerRadius = 10
+            self.backgroundColor = .systemGray6
+            self.layer.borderWidth = 0.5
+            self.layer.borderColor = UIColor.lightGray.cgColor
+            self.font = .systemFont(ofSize: 16)
+            self.textColor = .black
+            self.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: self.frame.height))
+            self.leftViewMode = .always
+            self.translatesAutoresizingMaskIntoConstraints = false
+        }
+    }
+}

@@ -3,11 +3,10 @@ class LoginInspector: LoginViewControllerDelegate {
 
     func checkPswd(login: String, password: String) -> Bool {
         if (login + password).hashValue == Checker.shared.check() {
-            print ("Accepted")
+            print("Accepted")
             return true
-        }
-        else {
-            print ("Denied")
+        } else {
+            print("Denied")
             return false
         }
     }
@@ -16,10 +15,9 @@ protocol LoginFactory {
     func factory() -> LoginInspector
 }
 
-class MyLoginFactory: LoginFactory  {
+class MyLoginFactory: LoginFactory {
     func factory() -> LoginInspector {
-        let v = LoginInspector()
-        return v
+        let factory = LoginInspector()
+        return factory
     }
 }
-

@@ -2,9 +2,7 @@ import UIKit
 import SnapKit
 class ProfileHeaderView: UIView {
     var status: String? = "Waiting for something..."
-    
     var isSelected: Bool = false
-    
     var avatarImageView: UIImageView = {
         var image: UIImageView = UIImageView()
         image.translatesAutoresizingMaskIntoConstraints = false
@@ -16,7 +14,6 @@ class ProfileHeaderView: UIView {
         image.isUserInteractionEnabled = true
         return image
     }()
-    
     var fullNameLabel: UILabel = {
         var name: UILabel = UILabel()
         name.translatesAutoresizingMaskIntoConstraints = false
@@ -24,7 +21,6 @@ class ProfileHeaderView: UIView {
         name.font = .boldSystemFont(ofSize: 18)
         return name
     }()
-    
     var statusLabel: UILabel = {
         var status: UILabel = UILabel()
         status.translatesAutoresizingMaskIntoConstraints = false
@@ -42,7 +38,6 @@ class ProfileHeaderView: UIView {
         btn.layer.cornerRadius = 1
         return btn
     }()
-    
     let dimView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -50,43 +45,22 @@ class ProfileHeaderView: UIView {
         view.layer.opacity = 0
         return view
     }()
-    
     var statusTextField: UITextField = {
         var textfield: UITextField = UITextField()
-        textfield.translatesAutoresizingMaskIntoConstraints = false
-        textfield.backgroundColor = .white
+        textfield.setStyle(style: .status)
         textfield.placeholder = "Enter status"
-        textfield.layer.cornerRadius = 12
-        textfield.layer.borderWidth = 1
-        textfield.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: textfield.frame.height))
-        textfield.leftViewMode = .always
-        textfield.layer.borderColor = UIColor.black.cgColor
-        textfield.font = .systemFont(ofSize: 15)
-        textfield.textColor = .black
-        textfield.addTarget(self, action: #selector(statusTextChanged), for: .editingChanged)
+        textfield.addTarget(ProfileHeaderView.self, action: #selector(statusTextChanged), for: .editingChanged)
         return textfield
     }()
-    
     lazy var setStatusButton: CustomButton = {
-        var btn = CustomButton(title: "Set status", titleColor: .white) {
-            self.statusLabel.text = self.status
-            self.statusTextField.text = ""
-        }
-        btn.translatesAutoresizingMaskIntoConstraints = false
-        btn.backgroundColor = .blue
-        btn.layer.cornerRadius = 12
-        btn.layer.shadowColor = UIColor.black.cgColor
-        btn.layer.shadowOffset = CGSize(width: 5, height: 5)
-        btn.layer.shadowRadius = 5
-        btn.layer.shadowOpacity = 1.0
+        var btn = CustomButton(title: "Set status", titleColor: .white, onTap: statusButtonTapped)
+        btn.setStyle(style: .status)
         return btn
     }()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tap))
-
         addGestureRecognizer(tapGesture)
         translatesAutoresizingMaskIntoConstraints = false
         statusLabel.text = status
@@ -96,11 +70,9 @@ class ProfileHeaderView: UIView {
         setupConstraints()
 
     }
-    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
     private func setupConstraints() {
 
         avatarImageView.snp.makeConstraints { (make) in
@@ -108,7 +80,6 @@ class ProfileHeaderView: UIView {
             make.leading.equalTo(self.safeAreaLayoutGuide.snp.leading).offset(16)
             make.size.equalTo(CGSize(width: 103, height: 103))
         }
-        
         fullNameLabel.snp.makeConstraints { (make) in
             make.leading.equalTo(avatarImageView.snp.trailing).offset(16)
             make.trailing.equalTo(self.snp.trailing).offset(-16)
@@ -121,27 +92,23 @@ class ProfileHeaderView: UIView {
             make.top.equalTo(avatarImageView.snp.bottom).offset(-35)
             make.bottom.equalTo(avatarImageView).offset(-10)
         }
-        
         statusTextField.snp.makeConstraints { (make) in
             make.leading.equalTo(fullNameLabel)
             make.trailing.equalTo(self.snp.trailing).offset(-16)
             make.top.equalTo(statusLabel.snp.bottom).offset(10)
             make.height.equalTo(30)
         }
-        
         setStatusButton.snp.makeConstraints { (make) in
             make.leading.equalTo(self.snp.leading).offset(16)
             make.trailing.equalTo(self.snp.trailing).offset(-16)
             make.top.equalTo(statusTextField.snp.bottom).offset(10)
             make.height.equalTo(50)
         }
-        
         closeButton.snp.makeConstraints { (make) in
             make.trailing.equalTo(self.snp.trailing).offset(-20)
             make.top.equalTo(self.snp.top).offset(10)
             make.size.equalTo(CGSize(width: 20, height: 20))
         }
-        
         dimView.snp.makeConstraints { (make) in
             make.top.equalTo(self.safeAreaLayoutGuide.snp.top)
             make.trailing.equalTo(self.snp.trailing)
@@ -150,12 +117,10 @@ class ProfileHeaderView: UIView {
 
         }
         self.snp.makeConstraints { (make) in
-   //         make.top.equalTo(safeAreaLayoutGuide.snp.top).offset(-30)
             make.bottom.equalTo(setStatusButton.snp.bottom).offset(15)
         }
 
     }
-    
     private func setupViews() {
         addSubview(setStatusButton)
         addSubview(avatarImageView)
@@ -169,10 +134,14 @@ class ProfileHeaderView: UIView {
         dimView.isHidden = true
     }
 
+    func statusButtonTapped() {
+        self.statusLabel.text = self.status
+        self.statusTextField.text = ""
+    }
+
     @objc func tap() {
         animate()
     }
-    
     @objc func statusTextChanged(_ textField: UITextField) {
         status = textField.text
     }
@@ -183,24 +152,26 @@ class ProfileHeaderView: UIView {
                 self.dimView.isHidden = false
                 self.avatarImageView.layer.cornerRadius = 0
                 self.dimView.layer.opacity = 0.5
-                self.avatarImageView.transform = CGAffineTransform(scaleX: (self.window?.bounds.width)!/self.avatarImageView.bounds.width, y: (self.window?.bounds.width)!/self.avatarImageView.bounds.width)
-                self.avatarImageView.center = CGPoint(x: (self.window?.bounds.midX)!, y:(self.window?.bounds.midY)! - (self.window?.safeAreaInsets.bottom)! - (self.window?.safeAreaInsets.top)!)
+                self.avatarImageView.transform = CGAffineTransform(
+                    scaleX: (self.window?.bounds.width)!/self.avatarImageView.bounds.width,
+                    y: (self.window?.bounds.width)!/self.avatarImageView.bounds.width)
+                self.avatarImageView.center = CGPoint(
+                    x: (self.window?.bounds.midX)!,
+                    y: (self.window?.bounds.midY)!-(self.window?.safeAreaInsets.bottom)!-(self.window?.safeAreaInsets.top)!)
             }
             UIView.addKeyframe(withRelativeStartTime: 0.5, relativeDuration: 0.3) {
                     self.closeButton.isHidden = false
             }
         })
     }
-    
     func animate2() {
-        UIView.animateKeyframes(withDuration: 0.5,delay: 0, options: [], animations: {
+        UIView.animateKeyframes(withDuration: 0.5, delay: 0, options: [], animations: {
             UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 0.5) {
                 self.dimView.layer.opacity = 0
                 self.sendSubviewToBack(self.dimView)
                 self.avatarImageView.layer.cornerRadius = 50
-                self.avatarImageView.transform = CGAffineTransform(scaleX: 1 , y: 1)
+                self.avatarImageView.transform = CGAffineTransform(scaleX: 1, y: 1)
                 self.avatarImageView.center = CGPoint(x: 66, y: 86)
-                
             }
             UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 0.3) {
                 self.closeButton.isHidden = true
@@ -208,12 +179,3 @@ class ProfileHeaderView: UIView {
         }, completion: {_ in self.dimView.isHidden = true})
     }
 }
-
-    
-
-    
-
-    
-
-
-

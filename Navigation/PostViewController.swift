@@ -2,7 +2,6 @@ import UIKit
 
 class PostViewController: UIViewController {
     var titleName: String?
-    
         override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .green
@@ -10,10 +9,9 @@ class PostViewController: UIViewController {
         navigationItem.rightBarButtonItem = infoButton
         self.title = titleName
     }
-    
     @objc func infoTap() {
-        let vc = InfoViewController()
-        self.present(vc, animated: true, completion: nil)
+        let controller = InfoViewController()
+        self.present(controller, animated: true, completion: nil)
     }
 
 }

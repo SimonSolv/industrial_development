@@ -14,8 +14,8 @@ class PostTableViewCell: UITableViewCell {
             postLikes.text = "Likes: \(post?.likes ?? 0)"
         }
     }
-    
-    var postImageView: UIImageView = {
+
+    lazy var postImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.backgroundColor = .black
@@ -23,8 +23,8 @@ class PostTableViewCell: UITableViewCell {
         imageView.sizeToFit()
         return imageView
     }()
-    
-    var postTitle: UILabel = {
+
+    lazy var postTitle: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = .black
@@ -32,8 +32,8 @@ class PostTableViewCell: UITableViewCell {
         label.numberOfLines = 2
         return label
     }()
- 
-    var postDescription: UILabel = {
+
+    lazy var postDescription: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = .systemGray
@@ -41,8 +41,8 @@ class PostTableViewCell: UITableViewCell {
         label.numberOfLines = 0
         return label
     }()
-    
-    var postViews: UILabel = {
+
+    lazy var postViews: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = .black
@@ -50,8 +50,8 @@ class PostTableViewCell: UITableViewCell {
         label.numberOfLines = 1
         return label
     }()
-    
-    var postLikes: UILabel = {
+
+    lazy var postLikes: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = .black
@@ -59,30 +59,28 @@ class PostTableViewCell: UITableViewCell {
         label.numberOfLines = 1
         return label
     }()
-    
+
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        
         setupViews()
     }
-    
+
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         setupViews()
     }
-    
+
 }
 
 extension PostTableViewCell {
-    
+
     private func imageColoring() {
         ImageProcessor().processImage(sourceImage: sourceImage ?? UIImage(imageLiteralResourceName: "NoImage"), filter: .colorInvert, completion: { []image in
             postImageView.image = image
         })
     }
-    
+
     private func setupViews() {
-        //        translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(postImageView)
         contentView.addSubview(postTitle)
         contentView.addSubview(postDescription)
@@ -94,32 +92,31 @@ extension PostTableViewCell {
             make.leading.equalTo(contentView.snp.leading).offset(16)
             make.trailing.equalTo(contentView.snp.trailing).offset(-16)
         }
-        
+
         postImageView.snp.makeConstraints { (make) in
             make.top.equalTo(postTitle.snp.bottom).offset(12)
             make.leading.equalTo(contentView.snp.leading)
             make.trailing.equalTo(contentView.snp.trailing)
             make.height.equalTo(contentView.snp.width)
         }
-        
+
         postDescription.snp.makeConstraints { (make) in
             make.top.equalTo(postImageView.snp.bottom).offset(16)
             make.leading.equalTo(contentView.snp.leading).offset(16)
             make.trailing.equalTo(contentView.snp.trailing).offset(-16)
-            
+
         }
-        
+
         postViews.snp.makeConstraints { (make) in
             make.top.equalTo(postDescription.snp.bottom).offset(16)
             make.trailing.equalTo(contentView.snp.trailing).offset(-16)
-            
+
         }
-        
+
         postLikes.snp.makeConstraints { (make) in
             make.top.equalTo(postViews.snp.top)
             make.leading.equalTo(contentView.snp.leading).offset(16)
             make.bottom.equalTo(contentView.snp.bottom).offset(-16)
         }
-
     }
 }

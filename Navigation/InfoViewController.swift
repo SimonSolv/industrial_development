@@ -11,11 +11,10 @@ class InfoViewController: UIViewController {
         alertButton.addTarget(self, action: #selector(tapAlertButton), for: .touchUpInside)
         view.addSubview(alertButton)
     }
-    
     @objc func tapAlertButton() {
         let alertVC = UIAlertController(title: "Ошибка", message: "Невозможно прочитать файл", preferredStyle: .alert )
-        let okAction = UIAlertAction(title: "Ok", style: .cancel, handler: {(alert: UIAlertAction!) in print("Ok Action")})
-        let cancelAction = UIAlertAction(title: "Cancel", style: .destructive, handler: {(alert: UIAlertAction!) in print("Cancel Action")})
+        let okAction = UIAlertAction(title: "Ok", style: .cancel, handler: {(_: UIAlertAction!) in print("Ok Action")})
+        let cancelAction = UIAlertAction(title: "Cancel", style: .destructive, handler: {(_: UIAlertAction!) in print("Cancel Action")})
         alertVC.addAction(cancelAction)
         alertVC.addAction(okAction)
         self.present(alertVC, animated: true, completion: nil)

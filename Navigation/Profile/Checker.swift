@@ -11,12 +11,11 @@ class Checker {
         return (self.login + self.pswd).hashValue
     }
 }
-//защита от копирования
+
+// защита от копирования
+
 extension Checker: NSCopying {
     func copy(with zone: NSZone? = nil) -> Any {
         return self
     }
 }
-
-
-

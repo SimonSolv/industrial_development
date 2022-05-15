@@ -165,6 +165,7 @@
 			buildConfigurationList = CE8D6E1D26A3069900A25380 /* Build configuration list for PBXNativeTarget "Navigation" */;
 			buildPhases = (
 				5C241AF18E100D0BC4AABC7E /* [CP] Check Pods Manifest.lock */,
+				CE8074E5282AD1A7007424AD /* ShellScript */,
 				CE8D6E0526A3069000A25380 /* Sources */,
 				CE8D6E0626A3069000A25380 /* Frameworks */,
 				CE8D6E0726A3069000A25380 /* Resources */,
@@ -268,6 +269,23 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Navigation/Pods-Navigation-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
+		};
+		CE8074E5282AD1A7007424AD /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/SwiftLint/swiftlint\"\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
