@@ -29,6 +29,8 @@
 		CED2D0BD26E532F600ED0387 /* PostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED2D0BC26E532F600ED0387 /* PostTableViewCell.swift */; };
 		CED2D0C026E5333300ED0387 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED2D0BF26E5333300ED0387 /* Post.swift */; };
 		CED2D0C426E9212700ED0387 /* ProfileTableHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED2D0C326E9212700ED0387 /* ProfileTableHeaderView.swift */; };
+		CED5A04627F21A2400F3CD26 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED5A04527F21A2400F3CD26 /* CustomButton.swift */; };
+		CED5A04927F7704500F3CD26 /* FeedModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED5A04827F7704500F3CD26 /* FeedModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -56,6 +58,8 @@
 		CED2D0BC26E532F600ED0387 /* PostTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostTableViewCell.swift; sourceTree = "<group>"; };
 		CED2D0BF26E5333300ED0387 /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		CED2D0C326E9212700ED0387 /* ProfileTableHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTableHeaderView.swift; sourceTree = "<group>"; };
+		CED5A04527F21A2400F3CD26 /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
+		CED5A04827F7704500F3CD26 /* FeedModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedModel.swift; sourceTree = "<group>"; };
 		F5A63297DB210132A95D4B1D /* Pods-Navigation.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Navigation.debug.xcconfig"; path = "Target Support Files/Pods-Navigation/Pods-Navigation.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -110,6 +114,7 @@
 		CE8D6E0B26A3069000A25380 /* Navigation */ = {
 			isa = PBXGroup;
 			children = (
+				CED5A04727F7701300F3CD26 /* Feed */,
 				CE8D6E5E26A9B0EE00A25380 /* Profile */,
 				CE8D6E0C26A3069000A25380 /* AppDelegate.swift */,
 				CE8D6E0E26A3069000A25380 /* SceneDelegate.swift */,
@@ -117,7 +122,6 @@
 				CE8D6E1526A3069900A25380 /* Assets.xcassets */,
 				CE8D6E1726A3069900A25380 /* LaunchScreen.storyboard */,
 				CE8D6E1A26A3069900A25380 /* Info.plist */,
-				CE8D6E2226A309F900A25380 /* FeedViewController.swift */,
 				CE8D6E2826A30EFD00A25380 /* PostViewController.swift */,
 				CE8D6E2F26A464E100A25380 /* InfoViewController.swift */,
 			);
@@ -139,8 +143,18 @@
 				CE524D67270233AE009C182B /* GalleryCollectionViewCell.swift */,
 				CE17063127D512D5000F3CC0 /* Checker.swift */,
 				CE17063327D53A6A000F3CC0 /* LoginInspector.swift */,
+				CED5A04527F21A2400F3CD26 /* CustomButton.swift */,
 			);
 			path = Profile;
+			sourceTree = "<group>";
+		};
+		CED5A04727F7701300F3CD26 /* Feed */ = {
+			isa = PBXGroup;
+			children = (
+				CE8D6E2226A309F900A25380 /* FeedViewController.swift */,
+				CED5A04827F7704500F3CD26 /* FeedModel.swift */,
+			);
+			path = Feed;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -151,6 +165,7 @@
 			buildConfigurationList = CE8D6E1D26A3069900A25380 /* Build configuration list for PBXNativeTarget "Navigation" */;
 			buildPhases = (
 				5C241AF18E100D0BC4AABC7E /* [CP] Check Pods Manifest.lock */,
+				CE8074E5282AD1A7007424AD /* ShellScript */,
 				CE8D6E0526A3069000A25380 /* Sources */,
 				CE8D6E0626A3069000A25380 /* Frameworks */,
 				CE8D6E0726A3069000A25380 /* Resources */,
@@ -255,6 +270,23 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Navigation/Pods-Navigation-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		CE8074E5282AD1A7007424AD /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/SwiftLint/swiftlint\"\n";
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -263,11 +295,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				CED2D0BD26E532F600ED0387 /* PostTableViewCell.swift in Sources */,
+				CED5A04627F21A2400F3CD26 /* CustomButton.swift in Sources */,
 				CE524D68270233AE009C182B /* GalleryCollectionViewCell.swift in Sources */,
 				CEC51D5126C2F9BA0093913C /* LoginViewController.swift in Sources */,
 				CE8D6E2926A30EFD00A25380 /* PostViewController.swift in Sources */,
 				CED2D0C026E5333300ED0387 /* Post.swift in Sources */,
 				CE8D6E1126A3069000A25380 /* ViewController.swift in Sources */,
+				CED5A04927F7704500F3CD26 /* FeedModel.swift in Sources */,
 				CE8D6E0D26A3069000A25380 /* AppDelegate.swift in Sources */,
 				CE8D6E3026A464E100A25380 /* InfoViewController.swift in Sources */,
 				CE17063227D512D5000F3CC0 /* Checker.swift in Sources */,

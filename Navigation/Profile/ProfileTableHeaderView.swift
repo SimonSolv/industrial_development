@@ -1,4 +1,3 @@
-
 import UIKit
 
 class ProfileTableHeaderView: UITableViewHeaderFooterView {
@@ -11,26 +10,19 @@ class ProfileTableHeaderView: UITableViewHeaderFooterView {
         super.init(reuseIdentifier: reuseIdentifier)
         setupViews()
     }
-    
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         setupViews()
     }
-    
 }
 extension ProfileTableHeaderView {
-    
     private func setupViews() {
-        
         contentView.addSubview(profileHeader)
-   
         let constraints = [
-            
             profileHeader.topAnchor.constraint(equalTo: contentView.topAnchor, constant: -22),
             profileHeader.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
             profileHeader.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            profileHeader.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            
+            profileHeader.leadingAnchor.constraint(equalTo: contentView.leadingAnchor)
         ]
         NSLayoutConstraint.activate(constraints)
     }

@@ -1,4 +1,3 @@
-
 import UIKit
 
 @main
@@ -16,14 +15,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didDiscardSceneSessions sceneSessions: Set<UISceneSession>) {
 
     }
-    struct Post {
-        var title: String = ""
-    }
 
 }
 struct Post {
-    let title: String
-    
+    var title: String?
 }
-
-
