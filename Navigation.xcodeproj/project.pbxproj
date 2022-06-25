@@ -7,13 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		80E82B75024F12407826DED2 /* Pods_Navigation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87C8C108E9E3CDAE8FF0EE04 /* Pods_Navigation.framework */; };
 		CE17063227D512D5000F3CC0 /* Checker.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE17063127D512D5000F3CC0 /* Checker.swift */; };
 		CE17063427D53A6A000F3CC0 /* LoginInspector.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE17063327D53A6A000F3CC0 /* LoginInspector.swift */; };
 		CE524CFC26FCFC6C009C182B /* PhotosTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE524CFB26FCFC6C009C182B /* PhotosTableViewCell.swift */; };
 		CE524CFF26FE47E3009C182B /* PhotoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE524CFE26FE47E3009C182B /* PhotoCollectionViewCell.swift */; };
 		CE524D652702314B009C182B /* GalleryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE524D642702314B009C182B /* GalleryViewController.swift */; };
 		CE524D68270233AE009C182B /* GalleryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE524D67270233AE009C182B /* GalleryCollectionViewCell.swift */; };
+		CE6CC4BB2864B1F3002F9E85 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = CE6CC4BA2864B1F3002F9E85 /* SnapKit */; };
 		CE8D6E0D26A3069000A25380 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE8D6E0C26A3069000A25380 /* AppDelegate.swift */; };
 		CE8D6E0F26A3069000A25380 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE8D6E0E26A3069000A25380 /* SceneDelegate.swift */; };
 		CE8D6E1126A3069000A25380 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE8D6E1026A3069000A25380 /* ViewController.swift */; };
@@ -35,7 +35,6 @@
 
 /* Begin PBXFileReference section */
 		2F49EAE980336B4FDFFDF2F7 /* Pods-Navigation.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Navigation.release.xcconfig"; path = "Target Support Files/Pods-Navigation/Pods-Navigation.release.xcconfig"; sourceTree = "<group>"; };
-		87C8C108E9E3CDAE8FF0EE04 /* Pods_Navigation.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Navigation.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE17063127D512D5000F3CC0 /* Checker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Checker.swift; sourceTree = "<group>"; };
 		CE17063327D53A6A000F3CC0 /* LoginInspector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginInspector.swift; sourceTree = "<group>"; };
 		CE524CFB26FCFC6C009C182B /* PhotosTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosTableViewCell.swift; sourceTree = "<group>"; };
@@ -68,7 +67,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				80E82B75024F12407826DED2 /* Pods_Navigation.framework in Frameworks */,
+				CE6CC4BB2864B1F3002F9E85 /* SnapKit in Frameworks */,
 				CEBE015B27496A74009CFB06 /* iOSIntPackage in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -85,21 +84,12 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
-		C2C8A1266C2266EF63C7DE98 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				87C8C108E9E3CDAE8FF0EE04 /* Pods_Navigation.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 		CE8D6E0026A3069000A25380 = {
 			isa = PBXGroup;
 			children = (
 				CE8D6E0B26A3069000A25380 /* Navigation */,
 				CE8D6E0A26A3069000A25380 /* Products */,
 				444A3095E80C4C34B9C50482 /* Pods */,
-				C2C8A1266C2266EF63C7DE98 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -178,6 +168,7 @@
 			name = Navigation;
 			packageProductDependencies = (
 				CEBE015A27496A74009CFB06 /* iOSIntPackage */,
+				CE6CC4BA2864B1F3002F9E85 /* SnapKit */,
 			);
 			productName = Navigation;
 			productReference = CE8D6E0926A3069000A25380 /* Navigation.app */;
@@ -208,6 +199,7 @@
 			mainGroup = CE8D6E0026A3069000A25380;
 			packageReferences = (
 				CEBE015927496A74009CFB06 /* XCRemoteSwiftPackageReference "iOSIntPackage" */,
+				CE6CC4B92864B1F3002F9E85 /* XCRemoteSwiftPackageReference "SnapKit" */,
 			);
 			productRefGroup = CE8D6E0A26A3069000A25380 /* Products */;
 			projectDirPath = "";
@@ -285,7 +277,8 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/SwiftLint/swiftlint\"\n";
+			shellScript = "
+";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -511,6 +504,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		CE6CC4B92864B1F3002F9E85 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
+			};
+		};
 		CEBE015927496A74009CFB06 /* XCRemoteSwiftPackageReference "iOSIntPackage" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/TrueMax/iOSIntPackage";
@@ -522,6 +523,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		CE6CC4BA2864B1F3002F9E85 /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CE6CC4B92864B1F3002F9E85 /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
+		};
 		CEBE015A27496A74009CFB06 /* iOSIntPackage */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = CEBE015927496A74009CFB06 /* XCRemoteSwiftPackageReference "iOSIntPackage" */;
