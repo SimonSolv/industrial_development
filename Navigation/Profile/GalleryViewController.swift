@@ -1,7 +1,11 @@
 import UIKit
+import SnapKit
+import iOSIntPackage
 
 class GalleryViewController: UIViewController {
 
+    let imageFilter = ImageProcessor()
+    
     let galleryView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
@@ -19,14 +23,13 @@ class GalleryViewController: UIViewController {
         galleryView.dataSource = self
         galleryView.delegate = self
         galleryView.reloadData()
-
-        let constraints = [
-            galleryView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            galleryView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            galleryView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            galleryView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
-        ]
-        NSLayoutConstraint.activate(constraints)
+        
+        galleryView.snp.makeConstraints { (make) -> Void in
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
+            make.trailing.equalTo(view.snp.trailing)
+            make.leading.equalTo(view.snp.leading)
+            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
+        }
     }
 
     override func viewDidLoad() {
@@ -35,6 +38,24 @@ class GalleryViewController: UIViewController {
         navigationController?.navigationBar.isHidden = false
         view.backgroundColor = .white
         setupViews()
+        print("Time: \(processImagesHW(filter: imageFilter))")
+//        let stringSter = "UserInteractive Time: 0.000270167, UserInitiated Time: 0.000105833, Default Time: 0.000105917, Background Time: 0.000252, Utility Time: 0.0003985 "
+
+    }
+    
+    func processImagesHW(filter: ImageProcessor)  -> Double {
+        var imagesForProcessing: [UIImage] = []
+        for i in 0...PhotoStorage.photoGrid.count - 1 {
+            imagesForProcessing.append(PhotoStorage.photoGrid[i].image)
+        }
+        let start = DispatchTime.now()
+        filter.processImagesOnThread(sourceImages: imagesForProcessing, filter: .chrome, qos: .default, completion:  { (images: [CGImage?]) in () })
+        let end = DispatchTime.now()
+        let nanoTime = end.uptimeNanoseconds - start.uptimeNanoseconds
+        let timeInterval = Double(nanoTime) / 1_000_000_000
+        return timeInterval
+        
+
     }
 
     override func viewWillAppear(_ animated: Bool) {
