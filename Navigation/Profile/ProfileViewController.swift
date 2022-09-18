@@ -8,8 +8,6 @@ class ProfileViewController: UIViewController, PhotosTableViewCellDelegate {
         return table
     }()
 
-    let cellID = "CellID"
-
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.isHidden = true
@@ -24,7 +22,7 @@ class ProfileViewController: UIViewController, PhotosTableViewCellDelegate {
 
     func setupTableView() {
         view.addSubview(tableView)
-        tableView.register(PostTableViewCell.self, forCellReuseIdentifier: cellID)
+        tableView.register(PostTableViewCell.self, forCellReuseIdentifier: PostTableViewCell.identifier)
         tableView.register(PhotosTableViewCell.self, forCellReuseIdentifier: PhotosTableViewCell.identifier)
         tableView.register(ProfileTableHeaderView.self, forHeaderFooterViewReuseIdentifier: "header")
         tableView.dataSource = self
@@ -38,8 +36,8 @@ class ProfileViewController: UIViewController, PhotosTableViewCellDelegate {
             make.leading.equalTo(view.snp.leading)
             make.trailing.equalTo(view.snp.trailing)
         }
-
     }
+    
     func galleryButtonTapped() {
         self.openGallery()
         print("GalleryButton Pressed")
@@ -81,7 +79,7 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
             cell.delegate = self
             return cell
         }
-        let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath) as? PostTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: PostTableViewCell.identifier, for: indexPath) as? PostTableViewCell
         cell?.post = PostStorage.tableModel[indexPath.section].body[indexPath.row - 1]
         return cell!
     }
