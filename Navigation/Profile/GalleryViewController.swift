@@ -33,7 +33,6 @@ class GalleryViewController: UIViewController {
             make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
         }
     }
-    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -58,7 +57,7 @@ class GalleryViewController: UIViewController {
             let end = DispatchTime.now()
             let nanoTime = end.uptimeNanoseconds - start.uptimeNanoseconds
             let timeInterval = Double(nanoTime) / 1_000_000_000
-            print("Time: \(timeInterval)")
+//            print("Time: \(timeInterval)")
             }
     }
 

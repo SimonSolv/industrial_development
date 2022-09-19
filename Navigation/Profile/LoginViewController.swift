@@ -1,4 +1,4 @@
-import Foundation
+import SnapKit
 import UIKit
 
 class LoginViewController: UIViewController {
@@ -8,6 +8,8 @@ class LoginViewController: UIViewController {
     private var userName: String?
     private var userPassword: String?
     lazy var contentView = UIView()
+    
+    lazy var passwordToUnlock: String = ""
 
     lazy var logoImageView: UIView = {
         let image: UIImageView = UIImageView()
@@ -21,6 +23,17 @@ class LoginViewController: UIViewController {
         var btn: CustomButton = CustomButton(title: "Log in", titleColor: .white, onTap: self.loginButtonTapped)
         btn.setStyle(style: .login)
         return btn
+    }()
+    
+    lazy var createPasswordButton: CustomButton = {
+        var btn: CustomButton = CustomButton(title: "Подобрать пароль", titleColor: .white, onTap: self.createPasswordButtonTapped)
+        btn.setStyle(style: .login)
+        return btn
+    }()
+    
+    lazy var indicatorView: UIActivityIndicatorView = {
+        let view = UIActivityIndicatorView(style: .medium)
+        return view
     }()
 
     lazy var loginTextField: UITextField = {
@@ -44,7 +57,6 @@ class LoginViewController: UIViewController {
 
     lazy var inputSourceView: UIStackView = {
         var view = UIStackView()
-        view.translatesAutoresizingMaskIntoConstraints = false
         view.layer.cornerRadius = 10
         view.clipsToBounds = true
         view.layer.borderWidth = 0.5
@@ -55,7 +67,6 @@ class LoginViewController: UIViewController {
 
     lazy var wrongPswdView: UILabel = {
         let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = .red
         label.text = "Неверный логин или пароль"
         label.font = .systemFont(ofSize: 15)
@@ -70,6 +81,50 @@ class LoginViewController: UIViewController {
             self.inputSourceView.layer.borderColor = UIColor.systemRed.cgColor
             self.wrongPswdView.isHidden = false
         }
+    }
+    
+    func createPasswordButtonTapped() {
+        passwordToUnlock = generatePassword(digits: 2)
+        self.createPasswordButton.setTitle("Сгенерирован пароль \(passwordToUnlock)", for: .normal)
+
+
+
+        var brudPass = ""
+        let operation = BrudForceOperation(doBlock: {
+            brudPass = self.bruteForce(passwordToUnlock: self.passwordToUnlock)
+        })
+
+        let operationQueue = OperationQueue()
+        operationQueue.qualityOfService = .background
+        operationQueue.addOperation(operation)
+        if operation.isExecuting {
+            self.indicatorView.isHidden = false
+            self.indicatorView.startAnimating()
+            print("OPERATION IS GOING")
+        }
+        if operation.isFinished {
+            self.passwordTextField.isSecureTextEntry = false
+            self.passwordTextField.text = brudPass
+            print("OPERATION FINISHED")
+            self.indicatorView.removeFromSuperview()
+        }
+    }
+    
+    private func activityIndicator(style: UIActivityIndicatorView.Style = .medium,
+                                       frame: CGRect? = nil,
+                                       center: CGPoint? = nil) -> UIActivityIndicatorView {
+
+        let activityIndicatorView = UIActivityIndicatorView(style: style)
+
+        if let frame = frame {
+            activityIndicatorView.frame = frame
+        }
+
+        if let center = center {
+            activityIndicatorView.center = center
+        }
+
+        return activityIndicatorView
     }
 
     @objc func loginTextChanged(_ textField: UITextField) {
@@ -97,6 +152,7 @@ class LoginViewController: UIViewController {
         setupViews()
         setupConstraits()
     }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         NotificationCenter.default.addObserver(self,
@@ -123,58 +179,87 @@ class LoginViewController: UIViewController {
         contentView.addSubview(logoImageView)
         contentView.addSubview(loginButton)
         contentView.addSubview(wrongPswdView)
+        contentView.addSubview(createPasswordButton)
         wrongPswdView.isHidden = true
         contentView.addSubview(inputSourceView)
         inputSourceView.addSubview(loginTextField)
         inputSourceView.addSubview(passwordTextField)
-        mainView.translatesAutoresizingMaskIntoConstraints = false
-        contentView.translatesAutoresizingMaskIntoConstraints = false
-
+        contentView.addSubview(indicatorView)
+        indicatorView.isHidden = true
     }
+    
     func setupConstraits() {
-        let constraints = [
-            mainView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            mainView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-            mainView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-            mainView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-
-            contentView.topAnchor.constraint(equalTo: mainView.topAnchor),
-            contentView.leadingAnchor.constraint(equalTo: mainView.leadingAnchor),
-            contentView.trailingAnchor.constraint(equalTo: mainView.trailingAnchor),
-            contentView.bottomAnchor.constraint(equalTo: mainView.bottomAnchor),
-            contentView.widthAnchor.constraint(equalTo: mainView.widthAnchor),
-
-            logoImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 120),
-            logoImageView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
-            logoImageView.widthAnchor.constraint(equalToConstant: 100),
-            logoImageView.heightAnchor.constraint(equalToConstant: 100),
-
-            loginButton.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 450),
-            loginButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
-            loginButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10),
-            loginButton.heightAnchor.constraint(equalToConstant: 50),
-            loginButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
-
-            wrongPswdView.topAnchor.constraint(equalTo: loginButton.bottomAnchor, constant: 5),
-            wrongPswdView.centerXAnchor.constraint(equalTo: loginButton.centerXAnchor),
-
-            inputSourceView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 340),
-            inputSourceView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
-            inputSourceView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10),
-            inputSourceView.heightAnchor.constraint(equalToConstant: 100),
-
-            loginTextField.topAnchor.constraint(equalTo: inputSourceView.topAnchor),
-            loginTextField.leadingAnchor.constraint(equalTo: inputSourceView.leadingAnchor),
-            loginTextField.trailingAnchor.constraint(equalTo: inputSourceView.trailingAnchor),
-            loginTextField.heightAnchor.constraint(equalToConstant: 50),
-
-            passwordTextField.topAnchor.constraint(equalTo: inputSourceView.topAnchor, constant: 50),
-            passwordTextField.leadingAnchor.constraint(equalTo: inputSourceView.leadingAnchor),
-            passwordTextField.trailingAnchor.constraint(equalTo: inputSourceView.trailingAnchor),
-            passwordTextField.heightAnchor.constraint(equalToConstant: 50)
-
-            ]
-        NSLayoutConstraint.activate(constraints)
+        
+        mainView.snp.makeConstraints { (make) in
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
+            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
+            make.leading.equalTo(view.safeAreaLayoutGuide.snp.leading)
+            make.trailing.equalTo(view.safeAreaLayoutGuide.snp.trailing)
+        }
+        
+        contentView.snp.makeConstraints { (make) in
+            make.top.equalTo(mainView.snp.top)
+            make.bottom.equalTo(mainView.snp.bottom)
+            make.leading.equalTo(mainView.snp.leading)
+            make.trailing.equalTo(mainView.snp.trailing)
+            make.width.equalTo(mainView.snp.width)
+        }
+        
+        logoImageView.snp.makeConstraints { (make) in
+            make.top.equalTo(contentView.snp.top).offset(120)
+            make.centerX.equalTo(contentView.snp.centerX)
+            make.width.equalTo(100)
+            make.height.equalTo(100)
+        }
+        
+        loginButton.snp.makeConstraints { (make) in
+            make.top.equalTo(contentView.snp.top).offset(450)
+            make.height.equalTo(50)
+            make.leading.equalTo(contentView.snp.leading).offset(10)
+            make.trailing.equalTo(contentView.snp.trailing).offset(-10)
+        }
+        
+        createPasswordButton.snp.makeConstraints { (make) in
+            make.top.equalTo(loginButton.snp.bottom).offset(30)
+            make.height.equalTo(50)
+            make.leading.equalTo(contentView.snp.leading).offset(10)
+            make.trailing.equalTo(contentView.snp.trailing).offset(-10)
+            make.bottom.equalTo(contentView.snp.bottom)
+        }
+        
+        wrongPswdView.snp.makeConstraints { (make) in
+            make.top.equalTo(loginButton.snp.bottom).offset(5)
+            make.centerX.equalTo(loginButton.snp.centerX)
+        }
+        
+        inputSourceView.snp.makeConstraints { (make) in
+            make.top.equalTo(contentView.snp.top).offset(340)
+            make.leading.equalTo(contentView.snp.leading).offset(10)
+            make.trailing.equalTo(contentView.snp.trailing).offset(-10)
+            make.height.equalTo(100)
+        }
+        
+        loginTextField.snp.makeConstraints { (make) in
+            make.top.equalTo(inputSourceView.snp.top)
+            make.leading.equalTo(inputSourceView.snp.leading)
+            make.trailing.equalTo(inputSourceView.snp.trailing)
+            make.height.equalTo(50)
+        }
+        
+        passwordTextField.snp.makeConstraints { (make) in
+            make.top.equalTo(inputSourceView.snp.top).offset(50)
+            make.leading.equalTo(inputSourceView.snp.leading)
+            make.trailing.equalTo(inputSourceView.snp.trailing)
+            make.height.equalTo(50)
+        }
+        
+        indicatorView.snp.makeConstraints { (make) in
+            make.top.equalTo(passwordTextField.snp.top).offset(5)
+            make.width.equalTo(20)
+            make.trailing.equalTo(inputSourceView.snp.trailing).offset(-15)
+            make.height.equalTo(20)
+        }
+ 
     }
 }
 
@@ -197,4 +282,55 @@ private extension LoginViewController {
 }
 protocol LoginViewControllerDelegate: AnyObject {
     func checkPswd (login: String, password: String) -> Bool
+}
+
+extension LoginViewController {
+    
+    func bruteForce(passwordToUnlock: String) -> String {
+        let ALLOWED_CHARACTERS:   [String] = String().printable.map { String($0) }
+
+        var password: String = ""
+
+        // Will strangely ends at 0000 instead of ~~~
+        while password != passwordToUnlock { // Increase MAXIMUM_PASSWORD_SIZE value for more
+            password = generateBruteForce(password, fromArray: ALLOWED_CHARACTERS)
+            // Your stuff here
+//            print(password)
+            // Your stuff here
+        }
+        
+        return password
+    }
+    
+    func generatePassword(digits: Int) -> String {
+        let letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~"
+        return String((0..<digits).map{ _ in letters.randomElement()! })
+    }
+    
+    func indexOf(character: Character, _ array: [String]) -> Int {
+        return array.firstIndex(of: String(character))!
+    }
+
+    func characterAt(index: Int, _ array: [String]) -> Character {
+        return index < array.count ? Character(array[index])
+                                   : Character("")
+    }
+
+    func generateBruteForce(_ string: String, fromArray array: [String]) -> String {
+        var str: String = string
+
+        if str.count <= 0 {
+            str.append(characterAt(index: 0, array))
+        }
+        else {
+            str.replace(at: str.count - 1,
+                        with: characterAt(index: (indexOf(character: str.last!, array) + 1) % array.count, array))
+
+            if indexOf(character: str.last!, array) == 0 {
+                str = String(generateBruteForce(String(str.dropLast()), fromArray: array)) + String(str.last!)
+            }
+        }
+
+        return str
+    }
 }
