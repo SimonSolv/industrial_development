@@ -83,6 +83,11 @@ class FeedViewController: UIViewController {
                                                name: Notification.Name("Incorrect"),
                                                object: nil)
     }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        NotificationCenter.default.removeObserver(self.correctNotification(notification:))
+        NotificationCenter.default.removeObserver(self.incorrectNotification(notification:))
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()

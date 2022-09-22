@@ -8,6 +8,12 @@ class LoginViewController: UIViewController {
     private var userName: String?
     private var userPassword: String?
     lazy var contentView = UIView()
+<<<<<<< HEAD
+=======
+    var brudPass = ""
+    
+    lazy var passwordToUnlock: String = ""
+>>>>>>> bd4a5a4 (Added BrudForce functionality)
 
     lazy var logoImageView: UIView = {
         let image: UIImageView = UIImageView()
@@ -71,6 +77,70 @@ class LoginViewController: UIViewController {
             self.wrongPswdView.isHidden = false
         }
     }
+<<<<<<< HEAD
+=======
+    
+    func unvealdPassword(password: String) {
+        self.passwordTextField.isSecureTextEntry = false
+        self.passwordTextField.text = password
+    }
+    
+    func activityIndicatorHandler(state: Bool) {
+        switch state {
+        case true:
+            self.indicatorView.startAnimating()
+            self.indicatorView.isHidden = false
+        case false:
+            self.indicatorView.isHidden = true
+            self.indicatorView.stopAnimating()
+        }
+
+    }
+    
+    func createPasswordButtonTapped() {
+        passwordToUnlock = generatePassword(digits: 3)
+        self.createPasswordButton.setTitle("Сгенерирован пароль \(passwordToUnlock)", for: .normal)
+
+        let operation = BrudForceOperation(doBlock: {
+            self.brudPass = self.bruteForce(passwordToUnlock: self.passwordToUnlock)
+
+        })
+        
+        let endHandleOperation = BrudForceOperation(doBlock: {
+            self.activityIndicatorHandler(state: false)
+            self.unvealdPassword(password: self.brudPass)
+            self.createPasswordButton.setTitle("Подобрать пароль", for: .normal)
+        })
+        endHandleOperation.addDependency(operation)
+        
+        let operationQueue = OperationQueue()
+        operationQueue.qualityOfService = .background
+        operationQueue.addOperation(operation)
+        OperationQueue.main.addOperation {
+            if operation.isExecuting {
+                self.activityIndicatorHandler(state: true)
+            }
+        }
+        OperationQueue.main.addOperation(endHandleOperation)
+    }
+    
+    private func activityIndicator(style: UIActivityIndicatorView.Style = .medium,
+                                       frame: CGRect? = nil,
+                                       center: CGPoint? = nil) -> UIActivityIndicatorView {
+
+        let activityIndicatorView = UIActivityIndicatorView(style: style)
+
+        if let frame = frame {
+            activityIndicatorView.frame = frame
+        }
+
+        if let center = center {
+            activityIndicatorView.center = center
+        }
+
+        return activityIndicatorView
+    }
+>>>>>>> bd4a5a4 (Added BrudForce functionality)
 
     @objc func loginTextChanged(_ textField: UITextField) {
         userName = textField.text
@@ -92,6 +162,7 @@ class LoginViewController: UIViewController {
         wrongPswdView.isHidden = true
         inputSourceView.layer.borderColor = UIColor.lightGray.cgColor
     }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
@@ -107,6 +178,7 @@ class LoginViewController: UIViewController {
                                                selector: #selector(keyboardWillHide(notification:)),
                                                name: UIResponder.keyboardWillHideNotification,
                                                object: nil)
+
     }
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
@@ -132,6 +204,7 @@ class LoginViewController: UIViewController {
 
     }
     func setupConstraits() {
+<<<<<<< HEAD
         let constraints = [
             mainView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             mainView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
@@ -175,6 +248,79 @@ class LoginViewController: UIViewController {
 
             ]
         NSLayoutConstraint.activate(constraints)
+=======
+        
+        mainView.snp.makeConstraints { (make) in
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
+            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
+            make.leading.equalTo(view.safeAreaLayoutGuide.snp.leading)
+            make.trailing.equalTo(view.safeAreaLayoutGuide.snp.trailing)
+        }
+        
+        contentView.snp.makeConstraints { (make) in
+            make.top.equalTo(mainView.snp.top)
+            make.bottom.equalTo(mainView.snp.bottom)
+            make.leading.equalTo(mainView.snp.leading)
+            make.trailing.equalTo(mainView.snp.trailing)
+            make.width.equalTo(mainView.snp.width)
+        }
+        
+        logoImageView.snp.makeConstraints { (make) in
+            make.top.equalTo(contentView.snp.top).offset(120)
+            make.centerX.equalTo(contentView.snp.centerX)
+            make.width.equalTo(100)
+            make.height.equalTo(100)
+        }
+        
+        loginButton.snp.makeConstraints { (make) in
+            make.top.equalTo(contentView.snp.top).offset(450)
+            make.height.equalTo(50)
+            make.leading.equalTo(contentView.snp.leading).offset(10)
+            make.trailing.equalTo(contentView.snp.trailing).offset(-10)
+        }
+        
+        createPasswordButton.snp.makeConstraints { (make) in
+            make.top.equalTo(loginButton.snp.bottom).offset(30)
+            make.height.equalTo(50)
+            make.leading.equalTo(contentView.snp.leading).offset(10)
+            make.trailing.equalTo(contentView.snp.trailing).offset(-10)
+            make.bottom.equalTo(contentView.snp.bottom)
+        }
+        
+        wrongPswdView.snp.makeConstraints { (make) in
+            make.top.equalTo(loginButton.snp.bottom).offset(5)
+            make.centerX.equalTo(loginButton.snp.centerX)
+        }
+        
+        inputSourceView.snp.makeConstraints { (make) in
+            make.top.equalTo(contentView.snp.top).offset(340)
+            make.leading.equalTo(contentView.snp.leading).offset(10)
+            make.trailing.equalTo(contentView.snp.trailing).offset(-10)
+            make.height.equalTo(100)
+        }
+        
+        loginTextField.snp.makeConstraints { (make) in
+            make.top.equalTo(inputSourceView.snp.top)
+            make.leading.equalTo(inputSourceView.snp.leading)
+            make.trailing.equalTo(inputSourceView.snp.trailing)
+            make.height.equalTo(50)
+        }
+        
+        passwordTextField.snp.makeConstraints { (make) in
+            make.top.equalTo(inputSourceView.snp.top).offset(50)
+            make.leading.equalTo(inputSourceView.snp.leading)
+            make.trailing.equalTo(inputSourceView.snp.trailing)
+            make.height.equalTo(50)
+        }
+        
+        indicatorView.snp.makeConstraints { (make) in
+            make.centerY.equalTo(passwordTextField.snp.centerY)
+            make.width.equalTo(20)
+            make.trailing.equalTo(inputSourceView.snp.trailing).offset(-15)
+            make.height.equalTo(20)
+        }
+ 
+>>>>>>> bd4a5a4 (Added BrudForce functionality)
     }
 }
 
@@ -194,6 +340,8 @@ private extension LoginViewController {
         mainView.contentInset.bottom = .zero
         mainView.verticalScrollIndicatorInsets = .zero
     }
+    
+    
 }
 protocol LoginViewControllerDelegate: AnyObject {
     func checkPswd (login: String, password: String) -> Bool
