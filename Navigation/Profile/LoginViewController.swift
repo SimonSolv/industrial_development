@@ -8,6 +8,7 @@ class LoginViewController: UIViewController {
     private var userName: String?
     private var userPassword: String?
     lazy var contentView = UIView()
+    var brudPass = ""
     
     lazy var passwordToUnlock: String = ""
 
@@ -83,31 +84,48 @@ class LoginViewController: UIViewController {
         }
     }
     
+    func unvealdPassword(password: String) {
+        self.passwordTextField.isSecureTextEntry = false
+        self.passwordTextField.text = password
+    }
+    
+    func activityIndicatorHandler(state: Bool) {
+        switch state {
+        case true:
+            self.indicatorView.startAnimating()
+            self.indicatorView.isHidden = false
+        case false:
+            self.indicatorView.isHidden = true
+            self.indicatorView.stopAnimating()
+        }
+
+    }
+    
     func createPasswordButtonTapped() {
-        passwordToUnlock = generatePassword(digits: 2)
+        passwordToUnlock = generatePassword(digits: 3)
         self.createPasswordButton.setTitle("Сгенерирован пароль \(passwordToUnlock)", for: .normal)
 
-
-
-        var brudPass = ""
         let operation = BrudForceOperation(doBlock: {
-            brudPass = self.bruteForce(passwordToUnlock: self.passwordToUnlock)
-        })
+            self.brudPass = self.bruteForce(passwordToUnlock: self.passwordToUnlock)
 
+        })
+        
+        let endHandleOperation = BrudForceOperation(doBlock: {
+            self.activityIndicatorHandler(state: false)
+            self.unvealdPassword(password: self.brudPass)
+            self.createPasswordButton.setTitle("Подобрать пароль", for: .normal)
+        })
+        endHandleOperation.addDependency(operation)
+        
         let operationQueue = OperationQueue()
         operationQueue.qualityOfService = .background
         operationQueue.addOperation(operation)
-        if operation.isExecuting {
-            self.indicatorView.isHidden = false
-            self.indicatorView.startAnimating()
-            print("OPERATION IS GOING")
+        OperationQueue.main.addOperation {
+            if operation.isExecuting {
+                self.activityIndicatorHandler(state: true)
+            }
         }
-        if operation.isFinished {
-            self.passwordTextField.isSecureTextEntry = false
-            self.passwordTextField.text = brudPass
-            print("OPERATION FINISHED")
-            self.indicatorView.removeFromSuperview()
-        }
+        OperationQueue.main.addOperation(endHandleOperation)
     }
     
     private func activityIndicator(style: UIActivityIndicatorView.Style = .medium,
@@ -147,6 +165,7 @@ class LoginViewController: UIViewController {
         wrongPswdView.isHidden = true
         inputSourceView.layer.borderColor = UIColor.lightGray.cgColor
     }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
@@ -163,6 +182,7 @@ class LoginViewController: UIViewController {
                                                selector: #selector(keyboardWillHide(notification:)),
                                                name: UIResponder.keyboardWillHideNotification,
                                                object: nil)
+
     }
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
@@ -254,7 +274,7 @@ class LoginViewController: UIViewController {
         }
         
         indicatorView.snp.makeConstraints { (make) in
-            make.top.equalTo(passwordTextField.snp.top).offset(5)
+            make.centerY.equalTo(passwordTextField.snp.centerY)
             make.width.equalTo(20)
             make.trailing.equalTo(inputSourceView.snp.trailing).offset(-15)
             make.height.equalTo(20)
@@ -279,6 +299,8 @@ private extension LoginViewController {
         mainView.contentInset.bottom = .zero
         mainView.verticalScrollIndicatorInsets = .zero
     }
+    
+    
 }
 protocol LoginViewControllerDelegate: AnyObject {
     func checkPswd (login: String, password: String) -> Bool
