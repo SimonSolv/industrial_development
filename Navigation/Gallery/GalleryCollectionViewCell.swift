@@ -28,7 +28,6 @@ class GalleryCollectionViewCell: UICollectionViewCell {
     }
     private func setupViews() {
         contentView.addSubview(image)
-        translatesAutoresizingMaskIntoConstraints = false
         image.snp.makeConstraints { (make) -> Void in
             make.top.equalTo(contentView.snp.top)
             make.trailing.equalTo(contentView.snp.trailing)

@@ -2,12 +2,17 @@ import UIKit
 import iOSIntPackage
 
 class PostTableViewCell: UITableViewCell {
-    let imageFilter = ImageProcessor()
+    static let identifier = "PostCellID"
+    
+//    let imageFilter = ImageProcessor()
+    
     lazy var sourceImage: UIImage? = nil
+    
     var post: PostBody? {
         didSet {
             sourceImage = post?.image
-            imageColoring()
+//            imageColoring()
+            postImageView.image = post?.image
             postTitle.text = post?.title
             postDescription.text = post?.description
             postViews.text = "Views: \(post?.views ?? 0)"
